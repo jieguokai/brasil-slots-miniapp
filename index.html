@@ -172,6 +172,90 @@
         </main>
     </div>
     
+    <!-- DEPOSIT PAGE -->
+    <div class="deposit-page" id="deposit-page" style="display: none; padding: 12px; padding-bottom: 80px;">
+        <!-- Header -->
+        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+            <button onclick="showHome()" style="background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; margin-right: 12px;">←</button>
+            <div style="font-size: 18px; font-weight: bold; flex: 1; text-align: center;">Deposit</div>
+            <button style="background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer;">📋</button>
+        </div>
+        
+        <!-- Deposit Channels -->
+        <div style="font-size: 16px; font-weight: bold; margin-bottom: 12px;">Deposit Channels</div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
+            <div style="background: linear-gradient(135deg, #ff6b35, #f7931e); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; font-weight: bold;">Pix</div>
+            <div style="background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; color: var(--text-secondary);">ALIPAY</div>
+            <div style="background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; color: #00d4aa; font-weight: bold;">maya</div>
+            <div style="background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer;">QRPh</div>
+            <div style="background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer;">AllBank</div>
+            <div style="background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; font-size: 11px;">FortunePay</div>
+            <div style="background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; font-size: 10px;">PISOPAY</div>
+            <div style="background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; color: #00b14f;">GrabPay</div>
+            <div style="background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; color: #005ce6; font-weight: bold;">GCash</div>
+        </div>
+        
+        <!-- Promotion Selection -->
+        <div style="background: rgba(184, 50, 0, 0.2); border: 1px solid var(--accent); border-radius: 10px; padding: 12px; margin-bottom: 12px; display: flex; align-items: center; cursor: pointer;">
+            <span style="color: var(--accent); margin-right: 8px;">✓</span>
+            <span>Deposit Without Promotion</span>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, var(--accent), #ff6b35); border-radius: 10px; padding: 16px; margin-bottom: 20px; cursor: pointer;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="font-size: 24px; font-weight: bold;">R$ 100</div>
+                    <div style="font-size: 12px; opacity: 0.9;">Deposit Bonus</div>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 14px;">Limited to R$ 100</div>
+                    <div style="font-size: 12px; opacity: 0.9;">Trading Volume 1x</div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: right; font-size: 12px; color: var(--text-secondary); margin-bottom: 16px;">More Bonuses ▼</div>
+        
+        <!-- Account Balance -->
+        <div style="margin-bottom: 16px;">
+            <span style="color: var(--text-secondary);">Account Balance </span>
+            <span style="color: #4ade80; font-weight: bold;">R$ 0.00</span>
+        </div>
+        
+        <!-- Amount Input -->
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color: #4ade80; font-weight: bold;">R$</span>
+                <input type="number" placeholder="Range: 1 ~ 9,999,999" style="background: none; border: none; color: var(--text); font-size: 14px; flex: 1; outline: none;">
+            </div>
+        </div>
+        
+        <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 16px;">
+            🎁 Activate the bonus multiplier and win bonus every day 🎁
+        </div>
+        
+        <!-- Quick Amount Buttons -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
+            <button style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; cursor: pointer;" onclick="setAmount(10)">R$ 10</button>
+            <button style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; cursor: pointer;" onclick="setAmount(20)">R$ 20</button>
+            <button style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; cursor: pointer;" onclick="setAmount(50)">R$ 50</button>
+            <button style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; cursor: pointer;" onclick="setAmount(100)">R$ 100</button>
+            <button style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; cursor: pointer;" onclick="setAmount(200)">R$ 200</button>
+            <button style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; cursor: pointer;" onclick="setAmount(500)">R$ 500</button>
+            <button style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; cursor: pointer;" onclick="setAmount(1000)">R$ 1,000</button>
+            <button style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; cursor: pointer;" onclick="setAmount(5000)">R$ 5,000</button>
+            <button style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; cursor: pointer;" onclick="setAmount(10000)">R$ 10,000</button>
+        </div>
+        
+        <!-- Support -->
+        <div style="font-size: 12px; color: var(--text-secondary); text-align: center; margin-bottom: 16px;">
+            Questions or problems? Contact support. Thank you! <span style="color: var(--accent); cursor: pointer;">Online support.</span>
+        </div>
+        
+        <!-- Deposit Button -->
+        <button style="width: 100%; background: linear-gradient(135deg, var(--accent), #9a2a00); color: #fff; border: none; padding: 16px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer;" onclick="tg.showAlert('Processando depósito...')">Deposit Now</button>
+    </div>
+    
     <!-- PROFILE PAGE -->
     <div class="profile-page" id="profile-page">
         <!-- Header with balance -->
@@ -315,7 +399,7 @@
             <span class="icon">🎯</span>
             <span>Eventos</span>
         </a>
-        <a class="nav-item" onclick="tg.showAlert('Depósito')">
+        <a class="nav-item" onclick="showDepositPage()">
             <span class="icon">💰</span>
             <span>Depósito</span>
         </a>
@@ -465,15 +549,31 @@
         
         // Navigation
         function showHome() {
+            hideAllPages();
             document.getElementById('home-page').style.display = 'block';
-            document.getElementById('profile-page').classList.remove('active');
             updateNav(0);
         }
         
+        function showDepositPage() {
+            hideAllPages();
+            document.getElementById('deposit-page').style.display = 'block';
+            updateNav(3);
+        }
+        
         function showProfile() {
-            document.getElementById('home-page').style.display = 'none';
+            hideAllPages();
             document.getElementById('profile-page').classList.add('active');
             updateNav(4);
+        }
+        
+        function hideAllPages() {
+            document.getElementById('home-page').style.display = 'none';
+            document.getElementById('deposit-page').style.display = 'none';
+            document.getElementById('profile-page').classList.remove('active');
+        }
+        
+        function setAmount(amount) {
+            tg.showAlert('Valor selecionado: R$ ' + amount);
         }
         
         function updateNav(index) {
