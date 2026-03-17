@@ -12,8 +12,8 @@
             --bg: #0d0a08;
             --card: #1a1410;
             --border: #3d2820;
-            --accent: #ff4500;
-            --accent-light: #ff6b35;
+            --accent: #cc3700;
+            --accent-light: #e64a19;
             --text: #ffffff;
             --text-secondary: #a08070;
         }
@@ -35,11 +35,11 @@
             border-bottom: 2px solid var(--accent);
         }
         
-        .logo { 
-            font-size: 20px; 
-            font-weight: bold; 
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
             color: var(--accent);
-            text-shadow: 0 0 15px rgba(255, 69, 0, 0.6);
+            text-shadow: 0 0 10px rgba(204, 55, 0, 0.4);
         }
         
         .header-buttons {
@@ -71,19 +71,19 @@
         .btn-reg {
             background: linear-gradient(135deg, var(--accent), var(--accent-light));
             color: #fff;
-            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
+            box-shadow: 0 3px 10px rgba(204, 55, 0, 0.3);
         }
         
         .container { padding: 12px; }
         
         /* Banner */
         .banner {
-            background: linear-gradient(135deg, var(--accent), #ff6b35);
+            background: linear-gradient(135deg, var(--accent), #d84315);
             border-radius: 12px;
             padding: 24px 20px;
             text-align: center;
             margin-bottom: 12px;
-            box-shadow: 0 4px 20px rgba(255, 69, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(204, 55, 0, 0.25);
         }
         
         .banner h1 { font-size: 24px; margin-bottom: 8px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
@@ -91,20 +91,24 @@
         
         /* Marquee */
         .marquee {
-            background: rgba(255, 69, 0, 0.1);
-            border: 1px solid rgba(255, 69, 0, 0.3);
-            border-radius: 20px;
-            padding: 10px 16px;
+            background: rgba(204, 55, 0, 0.08);
+            border: 1px solid rgba(204, 55, 0, 0.2);
+            border-radius: 12px;
+            padding: 6px 12px;
             margin-bottom: 12px;
             overflow: hidden;
+            height: 28px;
+            display: flex;
+            align-items: center;
         }
         
         .marquee-text {
             display: inline-block;
-            animation: scroll 12s linear infinite;
+            animation: scroll 15s linear infinite;
             color: var(--accent);
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 500;
+            white-space: nowrap;
         }
         
         @keyframes scroll {
