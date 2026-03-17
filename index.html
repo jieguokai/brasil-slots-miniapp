@@ -37,30 +37,39 @@
         .marquee-text { display: inline-block; animation: scroll 30s linear infinite; color: var(--accent); font-size: 11px; white-space: nowrap; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         
+        /* Marketing Entry Row */
+        .marketing-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+        
+        .marketing-item {
+            flex-shrink: 0;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            text-align: center;
+            cursor: pointer;
+            min-width: 80px;
+        }
+        
+        .marketing-item .icon { font-size: 24px; margin-bottom: 4px; }
+        .marketing-item .label { font-size: 11px; font-weight: 600; }
+        
         /* Games */
         .games-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
         .game-card { background: var(--card); border-radius: 10px; overflow: hidden; cursor: pointer; border: 1px solid var(--border); }
-        .game-thumb { aspect-ratio: 1; background: linear-gradient(135deg, var(--accent), #9a2a00); display: flex; align-items: center; justify-content: center; font-size: 36px; }
+        .game-thumb { aspect-ratio: 1; background-size: cover; background-position: center; }
         .game-info { padding: 8px; }
         .game-name { font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
-        /* Promo Page */
-        .promo-page { display: none; padding: 12px; padding-bottom: 80px; }
-        .promo-page.active { display: block; }
-        .promo-header { font-size: 20px; font-weight: bold; margin-bottom: 16px; padding: 12px 0; border-bottom: 2px solid var(--accent); }
-        
-        /* Marketing Banner */
-        .marketing-banner { background: linear-gradient(135deg, var(--accent), #9a2a00); border-radius: 12px; padding: 20px; margin-bottom: 12px; cursor: pointer; position: relative; }
-        .marketing-banner .badge { position: absolute; top: 10px; right: 10px; background: #fff; color: var(--accent); padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; }
-        
-        /* Promo Detail */
-        .promo-detail-page { display: none; padding: 12px; padding-bottom: 80px; }
-        .promo-detail-page.active { display: block; }
-        .back-btn { background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 14px; margin-bottom: 16px; }
-        .promo-detail-image { width: 100%; height: 180px; background: linear-gradient(135deg, var(--accent), #9a2a00); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 60px; margin-bottom: 20px; }
-        .promo-detail-content { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
-        .promo-detail-content h3 { font-size: 16px; color: var(--accent); margin-bottom: 12px; }
-        .promo-detail-content p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; }
+        /* Provider Section */
+        .provider-section { margin-bottom: 20px; }
+        .section-title { font-size: 16px; font-weight: 700; color: var(--accent); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
         
         /* Profile */
         .profile-page { display: none; padding-bottom: 80px; }
@@ -131,44 +140,32 @@
                 <span class="marquee-text" id="marquee-content"></span>
             </div>
             
+            <!-- Marketing Entry Row -->
+            <div class="marketing-row">
+                <div class="marketing-item" onclick="tg.showAlert('Bônus Diário')">
+                    <div class="icon">🎁</div>
+                    <div class="label">Bônus</div>
+                </div>
+                <div class="marketing-item" onclick="tg.showAlert('Cashback')">
+                    <div class="icon">💰</div>
+                    <div class="label">Cashback</div>
+                </div>
+                <div class="marketing-item" onclick="tg.showAlert('VIP Club')">
+                    <div class="icon">👑</div>
+                    <div class="label">VIP</div>
+                </div>
+                <div class="marketing-item" onclick="tg.showAlert('Torneio')">
+                    <div class="icon">🏆</div>
+                    <div class="label">Torneio</div>
+                </div>
+                <div class="marketing-item" onclick="tg.showAlert('Indique')">
+                    <div class="icon">👥</div>
+                    <div class="label">Indique</div>
+                </div>
+            </div>
+            
             <div id="game-providers"></div>
         </main>
-    </div>
-    
-    <!-- PROMO PAGE -->
-    <div class="promo-page" id="promo-page">
-        <div class="promo-header">🎁 Promoções</div>
-        
-        <div class="marketing-banner" onclick="showPromoDetail('welcome')">
-            <span class="badge">NOVO</span>
-            <h3>🎁 Bônus de Boas-Vindas</h3>
-            <p>100% até R$ 500 no primeiro depósito</p>
-        </div>
-        
-        <div class="marketing-banner" onclick="showPromoDetail('daily')">
-            <span class="badge">HOT</span>
-            <h3>🔥 Recarga Diária</h3>
-            <p>Ganhe 20% extra todo dia</p>
-        </div>
-        
-        <div class="marketing-banner" onclick="showPromoDetail('cashback')">
-            <span class="badge">VIP</span>
-            <h3>💰 Cashback Semanal</h3>
-            <p>Até 10% de volta toda segunda</p>
-        </div>
-        
-        <div class="marketing-banner" onclick="showPromoDetail('referral')">
-            <span class="badge">Novo</span>
-            <h3>👥 Indique e Ganhe</h3>
-            <p>Ganhe R$ 50 por amigo indicado</p>
-        </div>
-    </div>
-    
-    <!-- PROMO DETAIL -->
-    <div class="promo-detail-page" id="promo-detail-page">
-        <button class="back-btn" onclick="backToPromo()">← Voltar</button>
-        <div class="promo-detail-image" id="promo-detail-image">🎁</div>
-        <div class="promo-detail-content" id="promo-detail-content"></div>
     </div>
     
     <!-- PROFILE PAGE -->
@@ -186,7 +183,7 @@
                 <div style="flex:1;">Depositar</div>
                 <div style="color:var(--text-secondary);">›</div>
             </div>
-            <div class="profile-menu-item" onclick="showPromoPage()">
+            <div class="profile-menu-item" onclick="tg.showAlert('Promoções')">
                 <div class="icon">🎁</div>
                 <div style="flex:1;">Promoções</div>
                 <div style="color:var(--text-secondary);">›</div>
@@ -215,7 +212,7 @@
             <span class="icon">🏠</span>
             <span>Início</span>
         </a>
-        <a class="nav-item" onclick="showPromoPage()">
+        <a class="nav-item" onclick="tg.showAlert('Promoções')">
             <span class="icon">🎁</span>
             <span>Promoções</span>
         </a>
@@ -248,32 +245,25 @@
         <div class="modal">
             <div class="modal-title">📝 Registrar</div>
             
-            <!-- Tab Buttons -->
             <div style="display:flex;gap:10px;margin-bottom:16px;">
                 <button id="tab-sms" class="btn" style="flex:1;background:var(--accent);color:#fff;" onclick="switchRegTab('sms')">SMS</button>
                 <button id="tab-pwd" class="btn" style="flex:1;background:transparent;color:var(--accent);border:1px solid var(--accent);" onclick="switchRegTab('pwd')">Senha</button>
             </div>
             
-            <!-- SMS Registration -->
             <div id="reg-sms">
                 <div style="display:flex;gap:8px;margin-bottom:12px;">
-                    <select class="form-input" style="width:80px;flex-shrink:0;">
-                        <option>+55</option>
-                    </select>
+                    <select class="form-input" style="width:80px;flex-shrink:0;"><option>+55</option></select>
                     <input type="tel" class="form-input" placeholder="Número de telefone" style="flex:1;">
                 </div>
                 <div style="display:flex;gap:8px;margin-bottom:12px;">
                     <input type="text" class="form-input" placeholder="Código SMS" style="flex:1;">
-                    <button class="btn" style="background:var(--accent);color:#fff;padding:0 16px;height:42px;white-space:nowrap;font-size:13px;" onclick="tg.showAlert('Código enviado!')">Enviar</button>
+                    <button class="btn" style="background:var(--accent);color:#fff;padding:0 16px;height:42px;font-size:13px;" onclick="tg.showAlert('Código enviado!')">Enviar</button>
                 </div>
             </div>
             
-            <!-- Password Registration (Hidden by default) -->
             <div id="reg-pwd" style="display:none;">
                 <div style="display:flex;gap:8px;margin-bottom:12px;">
-                    <select class="form-input" style="width:80px;flex-shrink:0;">
-                        <option>+55</option>
-                    </select>
+                    <select class="form-input" style="width:80px;flex-shrink:0;"><option>+55</option></select>
                     <input type="tel" class="form-input" placeholder="Número de telefone" style="flex:1;">
                 </div>
                 <input type="password" class="form-input" placeholder="Criar senha" style="margin-bottom:12px;">
@@ -302,47 +292,46 @@
         tg.setHeaderColor('#0f0c0a');
         tg.setBackgroundColor('#0f0c0a');
         
-        // Game data with images
-        const gamesData = {
-            'Pragmatic': [
-                { name: 'Aztec Gold', image: 'games/aztec-gold.jpg' },
-                { name: 'Joker Roma', image: 'games/joker-roma.jpg' },
-                { name: 'Big Bass', icon: '🎣' },
-                { name: 'Sugar Rush', icon: '🍬' },
-                { name: 'Wolf Gold', icon: '🐺' },
-                { name: 'Starlight', icon: '💎' }
-            ],
-            'PG Soft': [
-                { name: 'Mahjong Ways 2', image: 'games/mahjong-ways2.jpg' },
-                { name: 'Lucky Neko', image: 'games/lucky-neko.jpg' },
-                { name: 'Treasures', icon: '🏛️' },
-                { name: 'Wild Bandito', icon: '🤠' },
-                { name: 'Dragon Hatch', icon: '🐉' },
-                { name: 'Candy Burst', icon: '🍭' }
-            ],
-            'JILI': [
-                { name: 'Super Ace', icon: '🃏' },
-                { name: 'Golden Empire', icon: '👑' },
-                { name: 'Fortune Gems', icon: '💎' },
-                { name: 'Money Coming', icon: '💰' },
-                { name: 'Boxing King', icon: '🥊' },
-                { name: 'Dragon Tiger', icon: '🐲' }
-            ]
-        };
+        // All 22 games with images
+        const allGames = [
+            { name: 'Roma II', image: 'games/game01.jpg' },
+            { name: 'Wild Bounty', image: 'games/game02.jpg' },
+            { name: 'Mahjong Ways', image: 'games/game03.jpg' },
+            { name: 'Ways of the Qilin', image: 'games/game04.jpg' },
+            { name: 'Wild Bandito', image: 'games/game05.jpg' },
+            { name: 'Super Ace', image: 'games/game06.jpg' },
+            { name: 'Guan Gong', image: 'games/game07.jpg' },
+            { name: 'Caishen Wins', image: 'games/game08.jpg' },
+            { name: 'Fortune Rabbit', image: 'games/game09.jpg' },
+            { name: 'Prosperity Snake', image: 'games/game10.jpg' },
+            { name: 'Treasures of Aztec', image: 'games/game11.jpg' },
+            { name: 'Pinata Wins', image: 'games/game12.jpg' },
+            { name: 'Cocktail Nights', image: 'games/game13.jpg' },
+            { name: 'Fortune Ox', image: 'games/game14.jpg' },
+            { name: 'Ganesha Fortune', image: 'games/game15.jpg' },
+            { name: 'Jurassic Kingdom', image: 'games/game16.jpg' },
+            { name: 'Big Caishen', image: 'games/game17.jpg' },
+            { name: 'Fortune Tiger', image: 'games/game18.jpg' },
+            { name: 'Fortune Dragon', image: 'games/game19.jpg' },
+            { name: 'Galaxy Miner', image: 'games/game20.jpg' },
+            { name: 'Gates of Olympus', image: 'games/game21.jpg' },
+            { name: 'Wild Ape', image: 'games/game22.jpg' }
+        ];
         
+        // Split into providers
         const providers = [
-            { id: 'Pragmatic', name: 'Pragmatic Play', logo: 'PP' },
-            { id: 'PG Soft', name: 'PG Soft', logo: 'PG' },
-            { id: 'JILI', name: 'JILI Games', logo: 'JL' }
+            { name: 'Pragmatic Play', logo: 'PP', games: allGames.slice(0, 7) },
+            { name: 'PG Soft', logo: 'PG', games: allGames.slice(7, 14) },
+            { name: 'JILI Games', logo: 'JL', games: allGames.slice(14, 22) }
         ];
         
         // Marquee
         const marqueeData = [
-            { player: 'J***o', amount: 'R$ 50.000', game: 'Sweet Bonanza', icon: '🎉' },
+            { player: 'J***o', amount: 'R$ 50.000', game: 'Roma II', icon: '🎉' },
             { player: 'M***a', amount: 'R$ 12.500', icon: '💰' },
             { player: 'P***o', amount: 'R$ 120.000', game: 'Gates of Olympus', icon: '🔥' },
             { player: 'A**a', amount: 'R$ 8.900', icon: '💸' },
-            { player: 'C*****s', amount: 'R$ 75.000', game: 'Big Bass', icon: '🏆' }
+            { player: 'C*****s', amount: 'R$ 75.000', game: 'Wild Bounty', icon: '🏆' }
         ];
         
         document.getElementById('marquee-content').textContent = marqueeData.map(item => 
@@ -351,25 +340,23 @@
         
         // Render game providers
         function renderProviders() {
-            const html = providers.map(p => {
-                const games = gamesData[p.id] || [];
-                return `
-                    <div style="margin-bottom:20px;">
-                        <div style="font-size:16px;font-weight:700;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px;">
-                            <span style="background:linear-gradient(135deg,var(--accent),#d64a1a);color:#fff;padding:4px 10px;border-radius:6px;font-size:12px;">${p.logo}</span>
-                            <span>${p.name}</span>
-                        </div>
-                        <div class="games-grid">
-                            ${games.map(g => `
-                                <div class="game-card" onclick="tg.showAlert('${g.name}')">
-                                    <div class="game-thumb" style="${g.image ? `background:url('${g.image}') center/cover no-repeat;` : ''}">${g.icon || ''}</div>
-                                    <div class="game-info"><div class="game-name">${g.name}</div></div>
-                                </div>
-                            `).join('')}
-                        </div>
+            const html = providers.map(p => `
+                <div class="provider-section">
+                    <div class="section-title">
+                        <span style="background:linear-gradient(135deg,var(--accent),#d64a1a);color:#fff;padding:4px 10px;border-radius:6px;font-size:12px;">${p.logo}</span>
+                        <span>${p.name}</span>
+                        <span style="font-size:12px;color:var(--text-secondary);margin-left:auto;">${p.games.length} jogos</span>
                     </div>
-                `;
-            }).join('');
+                    <div class="games-grid">
+                        ${p.games.map(g => `
+                            <div class="game-card" onclick="tg.showAlert('${g.name}')">
+                                <div class="game-thumb" style="background-image:url('${g.image}')"></div>
+                                <div class="game-info"><div class="game-name">${g.name}</div></div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
             document.getElementById('game-providers').innerHTML = html;
         }
         
@@ -383,122 +370,22 @@
         
         // Navigation
         function showHome() {
-            hideAllPages();
             document.getElementById('home-page').style.display = 'block';
+            document.getElementById('profile-page').classList.remove('active');
             updateNav(0);
         }
         
-        function showPromoPage() {
-            hideAllPages();
-            document.getElementById('promo-page').classList.add('active');
-            updateNav(1);
-        }
-        
         function showProfile() {
-            hideAllPages();
+            document.getElementById('home-page').style.display = 'none';
             document.getElementById('profile-page').classList.add('active');
             updateNav(4);
-        }
-        
-        function hideAllPages() {
-            document.getElementById('home-page').style.display = 'none';
-            document.getElementById('promo-page').classList.remove('active');
-            document.getElementById('promo-detail-page').classList.remove('active');
-            document.getElementById('profile-page').classList.remove('active');
         }
         
         function updateNav(index) {
             document.querySelectorAll('.nav-item').forEach((n, i) => n.classList.toggle('active', i === index));
         }
         
-        // Promo detail
-        const promoDetails = {
-            welcome: {
-                icon: '🎁',
-                title: 'Bônus de Boas-Vindas',
-                content: `
-                    <h3>🎁 Como funciona:</h3>
-                    <p>Faça seu primeiro depósito e ganhe 100% de bônus até R$ 500!</p>
-                    <h3>📋 Regras:</h3>
-                    <ul>
-                        <li>Mínimo de depósito: R$ 20</li>
-                        <li>Bônus máximo: R$ 500</li>
-                        <li>Rollover: 35x o valor do bônus</li>
-                        <li>Válido por 7 dias</li>
-                    </ul>
-                    <h3>🎰 +100 Giros Grátis</h3>
-                    <p>Receba também 100 giros grátis no slot Sweet Bonanza!</p>
-                `
-            },
-            daily: {
-                icon: '🔥',
-                title: 'Recarga Diária',
-                content: `
-                    <h3>🔥 Como funciona:</h3>
-                    <p>Todos os dias, ganhe 20% extra em qualquer depósito!</p>
-                    <h3>📋 Regras:</h3>
-                    <ul>
-                        <li>Válido uma vez por dia</li>
-                        <li>Mínimo: R$ 50</li>
-                        <li>Máximo bônus: R$ 200</li>
-                        <li>Rollover: 25x</li>
-                    </ul>
-                `
-            },
-            cashback: {
-                icon: '💰',
-                title: 'Cashback Semanal',
-                content: `
-                    <h3>💰 Como funciona:</h3>
-                    <p>Receba até 10% de volta nas suas perdas toda segunda-feira!</p>
-                    <h3>📋 Níveis:</h3>
-                    <ul>
-                        <li>VIP 1-3: 5% cashback</li>
-                        <li>VIP 4-6: 8% cashback</li>
-                        <li>VIP 7+: 10% cashback</li>
-                    </ul>
-                    <p>Sem rollover! Use como quiser!</p>
-                `
-            },
-            referral: {
-                icon: '👥',
-                title: 'Indique e Ganhe',
-                content: `
-                    <h3>👥 Como funciona:</h3>
-                    <p>Indique amigos e ganhe R$ 50 para cada um que se registrar e depositar!</p>
-                    <h3>📋 Passos:</h3>
-                    <ul>
-                        <li>Compartilhe seu código</li>
-                        <li>Amigo se registra</li>
-                        <li>Amigo deposita mínimo R$ 50</li>
-                        <li>Você recebe R$ 50!</li>
-                    </ul>
-                    <p>Sem limite de indicações!</p>
-                `
-            }
-        };
-        
-        function showPromoDetail(id) {
-            const promo = promoDetails[id];
-            if (!promo) return;
-            
-            document.getElementById('promo-detail-image').textContent = promo.icon;
-            document.getElementById('promo-detail-content').innerHTML = `
-                <h2 style="color:var(--accent);margin-bottom:16px;">${promo.title}</h2>
-                ${promo.content}
-                <button class="btn-submit" style="margin-top:20px;" onclick="tg.showAlert('Participando...')">PARTICIPAR AGORA</button>
-            `;
-            
-            document.getElementById('promo-page').classList.remove('active');
-            document.getElementById('promo-detail-page').classList.add('active');
-        }
-        
-        function backToPromo() {
-            document.getElementById('promo-detail-page').classList.remove('active');
-            document.getElementById('promo-page').classList.add('active');
-        }
-        
-        // Modal functions
+        // Modal
         function showModal(id) {
             document.getElementById(id).classList.add('active');
         }
@@ -511,7 +398,7 @@
             document.getElementById(id).classList.remove('active');
         }
         
-        // Switch registration tab
+        // Switch reg tab
         function switchRegTab(tab) {
             const smsBtn = document.getElementById('tab-sms');
             const pwdBtn = document.getElementById('tab-pwd');
@@ -519,17 +406,13 @@
             const pwdForm = document.getElementById('reg-pwd');
             
             if (tab === 'sms') {
-                smsBtn.style.background = 'var(--accent)';
-                smsBtn.style.color = '#fff';
-                pwdBtn.style.background = 'transparent';
-                pwdBtn.style.color = 'var(--accent)';
+                smsBtn.style.cssText = 'flex:1;background:var(--accent);color:#fff;';
+                pwdBtn.style.cssText = 'flex:1;background:transparent;color:var(--accent);border:1px solid var(--accent);';
                 smsForm.style.display = 'block';
                 pwdForm.style.display = 'none';
             } else {
-                pwdBtn.style.background = 'var(--accent)';
-                pwdBtn.style.color = '#fff';
-                smsBtn.style.background = 'transparent';
-                smsBtn.style.color = 'var(--accent)';
+                pwdBtn.style.cssText = 'flex:1;background:var(--accent);color:#fff;';
+                smsBtn.style.cssText = 'flex:1;background:transparent;color:var(--accent);border:1px solid var(--accent);';
                 smsForm.style.display = 'none';
                 pwdForm.style.display = 'block';
             }
