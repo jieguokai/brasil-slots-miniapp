@@ -9,12 +9,13 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
-            --bg: #0d1117;
-            --card: #161b22;
-            --border: #30363d;
-            --accent: #ffd700;
-            --text: #fff;
-            --text-secondary: #8b949e;
+            --bg: #000000;
+            --card: #1a1a1a;
+            --border: #333333;
+            --accent: #ff4500;
+            --accent-light: #ff6347;
+            --text: #ffffff;
+            --text-secondary: #888888;
         }
         
         body {
@@ -31,56 +32,59 @@
             align-items: center;
             padding: 12px 16px;
             background: var(--card);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            border-bottom: 2px solid var(--accent);
         }
         
-        .logo { font-size: 20px; font-weight: bold; color: var(--accent); }
+        .logo { 
+            font-size: 22px; 
+            font-weight: bold; 
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
+        }
         
-        .btn {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+        .btn-reg {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
             color: #fff;
-            padding: 8px 20px;
-            border-radius: 20px;
+            padding: 10px 24px;
+            border-radius: 25px;
             border: none;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
         }
         
-        /* Container */
         .container { padding: 12px; }
         
         /* Banner */
         .banner {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, var(--accent), #ff6b35);
             border-radius: 12px;
-            padding: 20px;
+            padding: 24px 20px;
             text-align: center;
             margin-bottom: 12px;
+            box-shadow: 0 4px 20px rgba(255, 69, 0, 0.3);
         }
         
-        .banner h1 { font-size: 22px; margin-bottom: 8px; }
-        .banner p { font-size: 14px; opacity: 0.9; }
+        .banner h1 { font-size: 24px; margin-bottom: 8px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .banner p { font-size: 14px; opacity: 0.95; }
         
         /* Marquee */
         .marquee {
-            background: rgba(255, 215, 0, 0.1);
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            background: rgba(255, 69, 0, 0.1);
+            border: 1px solid rgba(255, 69, 0, 0.3);
             border-radius: 20px;
             padding: 10px 16px;
             margin-bottom: 12px;
             overflow: hidden;
-            white-space: nowrap;
         }
         
         .marquee-text {
             display: inline-block;
-            animation: scroll 15s linear infinite;
+            animation: scroll 12s linear infinite;
             color: var(--accent);
             font-size: 13px;
+            font-weight: 500;
         }
         
         @keyframes scroll {
@@ -93,7 +97,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
         
         .quick-card {
@@ -103,43 +107,84 @@
             padding: 16px 8px;
             text-align: center;
             cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .quick-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
         }
         
         .quick-card .icon { font-size: 28px; margin-bottom: 6px; }
-        .quick-card .title { font-size: 12px; font-weight: 600; }
+        .quick-card .title { font-size: 12px; font-weight: 600; color: var(--text); }
         
-        /* Tabs */
-        .tabs {
+        /* Category Tabs */
+        .cat-tabs {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 12px;
+            overflow-x: auto;
+            padding-bottom: 4px;
         }
         
-        .tab {
-            flex: 1;
+        .cat-tab {
+            flex-shrink: 0;
             background: var(--card);
             border: 1px solid var(--border);
-            color: var(--text);
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 14px;
+            color: var(--text-secondary);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
+            white-space: nowrap;
         }
         
-        .tab.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-color: transparent;
+        .cat-tab.active {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            border-color: var(--accent);
+            color: #fff;
+        }
+        
+        /* Main Toggle Buttons */
+        .main-toggle {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        
+        .toggle-btn {
+            flex: 1;
+            background: var(--card);
+            border: 2px solid var(--border);
+            color: var(--text-secondary);
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        
+        .toggle-btn.active {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            border-color: var(--accent);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
         }
         
         /* Section Title */
         .section-title {
             font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 10px;
+            font-weight: 700;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            color: var(--accent);
         }
         
         /* Games Grid */
@@ -155,22 +200,29 @@
             border-radius: 10px;
             overflow: hidden;
             cursor: pointer;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        
+        .game-card:hover {
+            border-color: var(--accent);
+            transform: scale(1.02);
         }
         
         .game-thumb {
             aspect-ratio: 1;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, var(--accent), #ff6b35);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
+            font-size: 36px;
         }
         
         .game-info { padding: 8px; }
-        .game-name { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .game-provider { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+        .game-name { font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .game-provider { font-size: 10px; color: var(--text-secondary); margin-top: 2px; }
         
-        /* Providers */
+        /* Providers Grid */
         .providers-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -182,22 +234,34 @@
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 10px;
-            padding: 12px 8px;
+            padding: 14px 8px;
             text-align: center;
             cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .provider-card:hover {
+            border-color: var(--accent);
+            background: rgba(255, 69, 0, 0.1);
+        }
+        
+        .provider-card.active {
+            border-color: var(--accent);
+            background: rgba(255, 69, 0, 0.2);
         }
         
         .provider-logo {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 8px;
-            margin: 0 auto 6px;
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            border-radius: 10px;
+            margin: 0 auto 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: bold;
+            color: #fff;
         }
         
         .provider-name { font-size: 11px; font-weight: 600; }
@@ -212,7 +276,7 @@
             margin-bottom: 12px;
         }
         
-        .compliance-title { font-size: 13px; color: var(--text-secondary); margin-bottom: 10px; }
+        .compliance-title { font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; }
         
         .compliance-logos {
             display: flex;
@@ -221,10 +285,13 @@
         }
         
         .compliance-logo {
-            background: rgba(255,255,255,0.1);
-            padding: 6px 12px;
+            background: rgba(255, 69, 0, 0.2);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 6px 14px;
             border-radius: 6px;
             font-size: 11px;
+            font-weight: 600;
         }
         
         /* Action Buttons */
@@ -236,18 +303,22 @@
         
         .action-btn {
             flex: 1;
-            background: linear-gradient(135deg, #4ade80, #22c55e);
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
             border: none;
             color: #fff;
             padding: 14px;
             border-radius: 10px;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
         }
         
         .action-btn.secondary {
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            background: var(--card);
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            box-shadow: none;
         }
         
         /* Social */
@@ -256,7 +327,7 @@
             margin-bottom: 12px;
         }
         
-        .social-title { font-size: 13px; color: var(--text-secondary); margin-bottom: 10px; }
+        .social-title { font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; }
         
         .social-links {
             display: flex;
@@ -275,6 +346,12 @@
             justify-content: center;
             font-size: 20px;
             cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            border-color: var(--accent);
+            background: rgba(255, 69, 0, 0.1);
         }
         
         /* Version */
@@ -292,7 +369,7 @@
             left: 0;
             right: 0;
             background: var(--card);
-            border-top: 1px solid var(--border);
+            border-top: 2px solid var(--accent);
             display: flex;
             justify-content: space-around;
             padding: 8px 0;
@@ -317,41 +394,57 @@
 <body>
     <header class="header">
         <div class="logo">🎰 SLOTS BR</div>
-        <button class="btn" onclick="tg.showAlert('Registro em breve!')">Registrar</button>
+        <button class="btn-reg" onclick="tg.showAlert('Registro em breve!')">Registrar</button>
     </header>
     
     <main class="container">
+        <!-- Banner -->
         <div class="banner">
-            <h1>🎉 Bônus de Boas-Vindas</h1>
-            <p>100% até R$ 500 + 100 Giros</p>
+            <h1>🎉 BÔNUS DE BOAS-VINDAS</h1>
+            <p>100% até R$ 500 + 100 Giros Grátis</p>
         </div>
         
+        <!-- Marquee -->
         <div class="marquee">
-            <span class="marquee-text">🎉 João ganhou R$ 50.000 • 🏆 Maria ganhou R$ 120.000 • 💰 Pedro ganhou R$ 80.000 • 🎉 Ana ganhou R$ 200.000</span>
+            <span class="marquee-text">🔥 João ganhou R$ 50.000 no Sweet Bonanza • 🏆 Maria ganhou R$ 120.000 • 💰 Pedro ganhou R$ 80.000 • 🎉 Ana ganhou R$ 200.000</span>
         </div>
         
+        <!-- Quick Links -->
         <div class="quick-links">
             <div class="quick-card" onclick="tg.showAlert('Bônus Diário!')">
                 <div class="icon">🎁</div>
-                <div class="title">Bônus Diário</div>
+                <div class="title">Bônus</div>
             </div>
             <div class="quick-card" onclick="tg.showAlert('Torneio!')">
                 <div class="icon">🏆</div>
                 <div class="title">Torneio</div>
             </div>
-            <div class="quick-card" onclick="tg.showAlert('VIP Club!')">
+            <div class="quick-card" onclick="tg.showAlert('VIP!')">
                 <div class="icon">👑</div>
-                <div class="title">VIP Club</div>
+                <div class="title">VIP</div>
             </div>
         </div>
         
-        <div class="tabs">
-            <button class="tab active" onclick="switchTab(this, 'games')">🔥 Populares</button>
-            <button class="tab" onclick="switchTab(this, 'providers')">🏭 Provedores</button>
+        <!-- Main Toggle: Hot Games + Providers -->
+        <div class="main-toggle">
+            <button class="toggle-btn active" onclick="switchView(this, 'hot')">
+                <span>🔥</span> Populares
+            </button>
+            <button class="toggle-btn" onclick="switchView(this, 'providers')">
+                <span>🏭</span> Provedores
+            </button>
         </div>
         
-        <div id="games-section">
-            <div class="section-title">🔥 Jogos Populares</div>
+        <!-- Category Tabs (shown when in hot games) -->
+        <div id="category-tabs" class="cat-tabs">
+            <button class="cat-tab active" onclick="filterCategory(this, 'all')">Todos</button>
+            <button class="cat-tab" onclick="filterCategory(this, 'slots')">Slots</button>
+            <button class="cat-tab" onclick="filterCategory(this, 'live')">Ao Vivo</button>
+            <button class="cat-tab" onclick="filterCategory(this, 'table')">Mesa</button>
+        </div>
+        
+        <!-- Hot Games View -->
+        <div id="hot-view">
             <div class="games-grid">
                 <div class="game-card" onclick="openGame('Sweet Bonanza')">
                     <div class="game-thumb">🍭</div>
@@ -391,67 +484,71 @@
                 <div class="game-card" onclick="openGame('Starlight')">
                     <div class="game-thumb">💎</div>
                     <div class="game-info">
-                        <div class="game-name">Starlight</div>
+                        <div class="game-name">Starlight Princess</div>
                         <div class="game-provider">Pragmatic</div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div id="providers-section" style="display:none">
-            <div class="section-title">🏭 Provedores</div>
+        <!-- Providers View -->
+        <div id="providers-view" style="display:none">
+            <div class="section-title">🏭 Selecione o Provedor</div>
             <div class="providers-grid">
-                <div class="provider-card" onclick="filterByProvider('Pragmatic')">
+                <div class="provider-card" onclick="selectProvider(this, 'Pragmatic')">
                     <div class="provider-logo">PP</div>
                     <div class="provider-name">Pragmatic</div>
                 </div>
-                <div class="provider-card" onclick="filterByProvider('PG Soft')">
+                <div class="provider-card" onclick="selectProvider(this, 'PG Soft')">
                     <div class="provider-logo">PG</div>
                     <div class="provider-name">PG Soft</div>
                 </div>
-                <div class="provider-card" onclick="filterByProvider('JILI')">
+                <div class="provider-card" onclick="selectProvider(this, 'JILI')">
                     <div class="provider-logo">JL</div>
                     <div class="provider-name">JILI</div>
                 </div>
-                <div class="provider-card" onclick="filterByProvider('Fa Chai')">
+                <div class="provider-card" onclick="selectProvider(this, 'Fa Chai')">
                     <div class="provider-logo">FC</div>
                     <div class="provider-name">Fa Chai</div>
                 </div>
-                <div class="provider-card" onclick="filterByProvider('Microgaming')">
+                <div class="provider-card" onclick="selectProvider(this, 'Microgaming')">
                     <div class="provider-logo">MG</div>
                     <div class="provider-name">Microgaming</div>
                 </div>
-                <div class="provider-card" onclick="filterByProvider('NetEnt')">
+                <div class="provider-card" onclick="selectProvider(this, 'NetEnt')">
                     <div class="provider-logo">NE</div>
                     <div class="provider-name">NetEnt</div>
                 </div>
-                <div class="provider-card" onclick="filterByProvider('Red Tiger')">
+                <div class="provider-card" onclick="selectProvider(this, 'Red Tiger')">
                     <div class="provider-logo">RT</div>
                     <div class="provider-name">Red Tiger</div>
                 </div>
-                <div class="provider-card" onclick="filterByProvider('YB')">
-                    <div class="provider-logo">YB</div>
-                    <div class="provider-name">YB Gaming</div>
+                <div class="provider-card" onclick="selectProvider(this, 'Playtech')">
+                    <div class="provider-logo">PT</div>
+                    <div class="provider-name">Playtech</div>
                 </div>
             </div>
         </div>
         
+        <!-- Compliance -->
         <div class="compliance">
-            <div class="compliance-title">✅ Site Licenciado</div>
+            <div class="compliance-title">✅ SITE LICENCIADO E REGULAMENTADO</div>
             <div class="compliance-logos">
                 <span class="compliance-logo">GLI</span>
                 <span class="compliance-logo">MGA</span>
-                <span class="compliance-logo">Curacao</span>
+                <span class="compliance-logo">CURACAO</span>
             </div>
         </div>
         
+        <!-- Actions -->
         <div class="actions">
-            <button class="action-btn" onclick="tg.showAlert('Depósito!')">💰 Depositar</button>
-            <button class="action-btn secondary" onclick="tg.showAlert('Suporte!')">💬 Suporte</button>
+            <button class="action-btn" onclick="tg.showAlert('Depósito!')">💰 DEPOSITAR</button>
+            <button class="action-btn secondary" onclick="tg.showAlert('Suporte!')">💬 SUPORTE</button>
         </div>
         
+        <!-- Social -->
         <div class="social">
-            <div class="social-title">Siga-nos</div>
+            <div class="social-title">SIGA-NOS</div>
             <div class="social-links">
                 <div class="social-link" onclick="openSocial('telegram')">✈️</div>
                 <div class="social-link" onclick="openSocial('facebook')">📘</div>
@@ -460,27 +557,28 @@
             </div>
         </div>
         
-        <div class="version">v1.0.0 | © 2026 Slots BR</div>
+        <div class="version">v1.0.0 | © 2026 SLOTS BR</div>
     </main>
     
+    <!-- Bottom Nav -->
     <nav class="bottom-nav">
-        <a href="#" class="nav-item active" onclick="setActive(this)">
+        <a href="#" class="nav-item active" onclick="setNavActive(this)">
             <span class="icon">🏠</span>
             <span>Início</span>
         </a>
-        <a href="#" class="nav-item" onclick="setActive(this)">
+        <a href="#" class="nav-item" onclick="setNavActive(this)">
             <span class="icon">🎁</span>
             <span>Promoções</span>
         </a>
-        <a href="#" class="nav-item" onclick="setActive(this)">
+        <a href="#" class="nav-item" onclick="setNavActive(this)">
             <span class="icon">🎯</span>
             <span>Eventos</span>
         </a>
-        <a href="#" class="nav-item" onclick="setActive(this)">
+        <a href="#" class="nav-item" onclick="setNavActive(this)">
             <span class="icon">💰</span>
             <span>Depósito</span>
         </a>
-        <a href="#" class="nav-item" onclick="setActive(this)">
+        <a href="#" class="nav-item" onclick="setNavActive(this)">
             <span class="icon">👤</span>
             <span>Perfil</span>
         </a>
@@ -490,29 +588,51 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
         tg.ready();
-        tg.setHeaderColor('#0d1117');
-        tg.setBackgroundColor('#0d1117');
+        tg.setHeaderColor('#000000');
+        tg.setBackgroundColor('#000000');
         
-        function switchTab(btn, tab) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        // Switch between Hot Games and Providers
+        function switchView(btn, view) {
+            document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            document.getElementById('games-section').style.display = tab === 'games' ? 'block' : 'none';
-            document.getElementById('providers-section').style.display = tab === 'providers' ? 'block' : 'none';
+            
+            if (view === 'hot') {
+                document.getElementById('hot-view').style.display = 'block';
+                document.getElementById('providers-view').style.display = 'none';
+                document.getElementById('category-tabs').style.display = 'flex';
+            } else {
+                document.getElementById('hot-view').style.display = 'none';
+                document.getElementById('providers-view').style.display = 'block';
+                document.getElementById('category-tabs').style.display = 'none';
+            }
         }
         
+        // Filter by category
+        function filterCategory(btn, category) {
+            document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            tg.showAlert('Filtrando: ' + category);
+        }
+        
+        // Select provider
+        function selectProvider(card, provider) {
+            document.querySelectorAll('.provider-card').forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+            tg.showAlert('Provedor selecionado: ' + provider);
+        }
+        
+        // Open game
         function openGame(name) {
             tg.showAlert('Abrindo: ' + name);
         }
         
-        function filterByProvider(provider) {
-            tg.showAlert('Filtrando: ' + provider);
-        }
-        
+        // Open social
         function openSocial(platform) {
             tg.showAlert('Abrindo: ' + platform);
         }
         
-        function setActive(el) {
+        // Set nav active
+        function setNavActive(el) {
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             el.classList.add('active');
         }
