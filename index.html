@@ -302,19 +302,19 @@
         tg.setHeaderColor('#0f0c0a');
         tg.setBackgroundColor('#0f0c0a');
         
-        // Game data
+        // Game data with images
         const gamesData = {
             'Pragmatic': [
-                { name: 'Sweet Bonanza', icon: '🍭' },
-                { name: 'Gates of Olympus', icon: '⚡' },
+                { name: 'Aztec Gold', image: 'games/aztec-gold.jpg' },
+                { name: 'Joker Roma', image: 'games/joker-roma.jpg' },
                 { name: 'Big Bass', icon: '🎣' },
                 { name: 'Sugar Rush', icon: '🍬' },
                 { name: 'Wolf Gold', icon: '🐺' },
                 { name: 'Starlight', icon: '💎' }
             ],
             'PG Soft': [
-                { name: 'Mahjong Ways', icon: '🀄' },
-                { name: 'Lucky Neko', icon: '🐱' },
+                { name: 'Mahjong Ways 2', image: 'games/mahjong-ways2.jpg' },
+                { name: 'Lucky Neko', image: 'games/lucky-neko.jpg' },
                 { name: 'Treasures', icon: '🏛️' },
                 { name: 'Wild Bandito', icon: '🤠' },
                 { name: 'Dragon Hatch', icon: '🐉' },
@@ -362,7 +362,7 @@
                         <div class="games-grid">
                             ${games.map(g => `
                                 <div class="game-card" onclick="tg.showAlert('${g.name}')">
-                                    <div class="game-thumb">${g.icon}</div>
+                                    <div class="game-thumb" style="${g.image ? `background:url('${g.image}') center/cover no-repeat;` : ''}">${g.icon || ''}</div>
                                     <div class="game-info"><div class="game-name">${g.name}</div></div>
                                 </div>
                             `).join('')}
