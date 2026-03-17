@@ -7,322 +7,88 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --bg: #0f0c0a; --card: #1a1714; --border: #3d3530; --accent: #b83200; --text: #fff; --text-secondary: #9a9088; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); padding-bottom: 70px; }
         
-        :root {
-            --bg: #0f0c0a;
-            --card: #1a1714;
-            --border: #3d3530;
-            --accent: #b83200;
-            --accent-light: #d64a1a;
-            --text: #ffffff;
-            --text-secondary: #9a9088;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            padding-bottom: 70px;
-        }
-        
-        /* Loading Screen */
-        .loading-screen {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--bg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.5s;
-        }
-        
-        .loading-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        .loading-logo {
-            font-size: 60px;
-            margin-bottom: 20px;
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
+        /* Loading */
+        .loading-screen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.5s; }
+        .loading-screen.hidden { opacity: 0; pointer-events: none; }
+        .loading-logo { font-size: 80px; margin-bottom: 20px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
         
         /* Download Banner */
-        .download-banner {
-            background: linear-gradient(90deg, var(--accent), var(--accent-light));
-            padding: 10px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .download-btn {
-            background: #fff;
-            color: var(--accent);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-        }
+        .download-banner { background: linear-gradient(90deg, var(--accent), #d64a1a); padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; }
+        .download-btn { background: #fff; color: var(--accent); padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; border: none; cursor: pointer; }
         
         /* Header */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 16px;
-            background: var(--card);
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .logo { font-size: 20px; font-weight: bold; color: var(--accent); }
-        
-        .btn {
-            padding: 8px 18px;
-            border-radius: 20px;
-            border: none;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-        
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--card); border-bottom: 1px solid var(--border); }
+        .logo { font-size: 22px; font-weight: bold; color: var(--accent); }
+        .btn { padding: 8px 18px; border-radius: 20px; border: none; font-size: 13px; font-weight: 700; cursor: pointer; }
         .btn-login { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
-        .btn-reg { background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: #fff; }
+        .btn-reg { background: linear-gradient(135deg, var(--accent), #d64a1a); color: #fff; }
         
         .container { padding: 12px; }
         
         /* Banner */
-        .banner {
-            background: linear-gradient(135deg, var(--accent), #9a2a00);
-            border-radius: 12px;
-            padding: 24px;
-            text-align: center;
-            margin-bottom: 12px;
-        }
+        .banner { background: linear-gradient(135deg, var(--accent), #9a2a00); border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 12px; }
         
-        .banner h1 { font-size: 22px; margin-bottom: 8px; }
+        /* Marquee */
+        .marquee { background: rgba(184, 50, 0, 0.08); border: 1px solid rgba(184, 50, 0, 0.15); border-radius: 12px; padding: 6px 12px; margin-bottom: 12px; overflow: hidden; height: 28px; display: flex; align-items: center; }
+        .marquee-text { display: inline-block; animation: scroll 30s linear infinite; color: var(--accent); font-size: 11px; white-space: nowrap; }
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         
-        /* Marketing Banners */
-        .marketing-banner {
-            background: linear-gradient(135deg, var(--accent), #9a2a00);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .marketing-banner .badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #fff;
-            color: var(--accent);
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 700;
-        }
-        
-        /* Games Grid */
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-        
-        .game-card {
-            background: var(--card);
-            border-radius: 10px;
-            overflow: hidden;
-            cursor: pointer;
-            border: 1px solid var(--border);
-        }
-        
-        .game-thumb {
-            aspect-ratio: 1;
-            background: linear-gradient(135deg, var(--accent), #9a2a00);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 36px;
-        }
-        
+        /* Games */
+        .games-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+        .game-card { background: var(--card); border-radius: 10px; overflow: hidden; cursor: pointer; border: 1px solid var(--border); }
+        .game-thumb { aspect-ratio: 1; background: linear-gradient(135deg, var(--accent), #9a2a00); display: flex; align-items: center; justify-content: center; font-size: 36px; }
         .game-info { padding: 8px; }
         .game-name { font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
+        /* Promo Page */
+        .promo-page { display: none; padding: 12px; padding-bottom: 80px; }
+        .promo-page.active { display: block; }
+        .promo-header { font-size: 20px; font-weight: bold; margin-bottom: 16px; padding: 12px 0; border-bottom: 2px solid var(--accent); }
+        
+        /* Marketing Banner */
+        .marketing-banner { background: linear-gradient(135deg, var(--accent), #9a2a00); border-radius: 12px; padding: 20px; margin-bottom: 12px; cursor: pointer; position: relative; }
+        .marketing-banner .badge { position: absolute; top: 10px; right: 10px; background: #fff; color: var(--accent); padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; }
+        
+        /* Promo Detail */
+        .promo-detail-page { display: none; padding: 12px; padding-bottom: 80px; }
+        .promo-detail-page.active { display: block; }
+        .back-btn { background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 14px; margin-bottom: 16px; }
+        .promo-detail-image { width: 100%; height: 180px; background: linear-gradient(135deg, var(--accent), #9a2a00); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 60px; margin-bottom: 20px; }
+        .promo-detail-content { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+        .promo-detail-content h3 { font-size: 16px; color: var(--accent); margin-bottom: 12px; }
+        .promo-detail-content p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; }
+        
         /* Profile */
-        .profile-header {
-            background: linear-gradient(135deg, var(--accent), #9a2a00);
-            padding: 30px 20px;
-            text-align: center;
-        }
-        
-        .profile-avatar {
-            width: 80px;
-            height: 80px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            margin: 0 auto 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-        }
-        
-        .vip-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #ffd700, #ffaa00);
-            color: #000;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 700;
-            margin-top: 10px;
-        }
-        
-        .profile-menu {
-            background: var(--card);
-            border-radius: 12px;
-            margin: 12px;
-            overflow: hidden;
-        }
-        
-        .profile-menu-item {
-            display: flex;
-            align-items: center;
-            padding: 16px;
-            border-bottom: 1px solid var(--border);
-            cursor: pointer;
-        }
-        
-        .profile-menu-item .icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(184, 50, 0, 0.15);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            margin-right: 12px;
-        }
+        .profile-page { display: none; padding-bottom: 80px; }
+        .profile-page.active { display: block; }
+        .profile-header { background: linear-gradient(135deg, var(--accent), #9a2a00); padding: 30px 20px; text-align: center; }
+        .profile-avatar { width: 80px; height: 80px; background: rgba(255,255,255,0.2); border-radius: 50%; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; font-size: 40px; border: 3px solid rgba(255,255,255,0.3); }
+        .vip-badge { display: inline-block; background: linear-gradient(135deg, #ffd700, #ffaa00); color: #000; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 700; margin-top: 10px; }
+        .profile-menu { background: var(--card); border-radius: 12px; margin: 12px; overflow: hidden; }
+        .profile-menu-item { display: flex; align-items: center; padding: 16px; border-bottom: 1px solid var(--border); cursor: pointer; }
+        .profile-menu-item .icon { width: 40px; height: 40px; background: rgba(184, 50, 0, 0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-right: 12px; }
         
         /* Modal */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.85);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
         .modal-overlay.active { display: flex; }
-        
-        .modal {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 24px;
-            width: 100%;
-            max-width: 360px;
-        }
-        
+        .modal { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; width: 100%; max-width: 360px; }
         .modal-title { font-size: 20px; font-weight: bold; color: var(--accent); margin-bottom: 20px; }
-        
-        .form-group { margin-bottom: 16px; }
-        .form-input {
-            width: 100%;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 12px;
-            color: var(--text);
-            font-size: 14px;
-        }
-        
-        .btn-submit {
-            width: 100%;
-            background: linear-gradient(135deg, var(--accent), #9a2a00);
-            color: #fff;
-            border: none;
-            padding: 14px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-        }
+        .form-input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; padding: 12px; color: var(--text); font-size: 14px; margin-bottom: 12px; }
+        .btn-submit { width: 100%; background: linear-gradient(135deg, var(--accent), #9a2a00); color: #fff; border: none; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; }
         
         /* Popup */
-        .popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
+        .popup-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
         .popup-overlay.active { display: flex; }
-        
-        .popup {
-            background: var(--card);
-            border: 1px solid var(--accent);
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
-            max-width: 320px;
-            position: relative;
-        }
-        
-        .popup-close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 20px;
-            cursor: pointer;
-        }
+        .popup { background: var(--card); border: 1px solid var(--accent); border-radius: 16px; padding: 24px; text-align: center; max-width: 320px; position: relative; }
+        .popup-close { position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--text-secondary); font-size: 20px; cursor: pointer; }
         
         /* Bottom Nav */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0; right: 0;
-            background: var(--card);
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 0;
-        }
-        
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 11px;
-            gap: 4px;
-        }
-        
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 8px 0; z-index: 100; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-secondary); font-size: 11px; gap: 4px; padding: 4px 12px; cursor: pointer; }
         .nav-item.active { color: var(--accent); }
         .nav-item .icon { font-size: 22px; }
     </style>
@@ -331,23 +97,22 @@
     <!-- Loading Screen -->
     <div class="loading-screen" id="loading-screen">
         <div class="loading-logo">🎰</div>
-        <div style="font-size:24px;font-weight:bold;color:var(--accent);margin-bottom:20px;">SLOTS BR</div>
+        <div style="font-size:28px;font-weight:bold;color:var(--accent);margin-bottom:30px;">SLOTS BR</div>
         <div style="width:200px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;">
             <div style="height:100%;background:var(--accent);width:0%;animation:load 2s forwards;"></div>
         </div>
     </div>
     
-    <!-- Download Banner -->
-    <div class="download-banner" id="download-banner">
-        <span style="font-size:13px;font-weight:600;">📱 Baixe o APP e ganhe R$ 10!</span>
-        <div>
-            <button class="download-btn" onclick="tg.showAlert('Download iniciado!')">Baixar</button>
-            <button onclick="document.getElementById('download-banner').style.display='none'" style="background:none;border:none;color:#fff;font-size:18px;margin-left:10px;">×</button>
+    <!-- HOME PAGE -->
+    <div id="home-page">
+        <div class="download-banner" id="download-banner">
+            <span style="font-size:13px;font-weight:600;">📱 Baixe o APP e ganhe R$ 10!</span>
+            <div>
+                <button class="download-btn" onclick="tg.showAlert('Download')">Baixar</button>
+                <button onclick="document.getElementById('download-banner').style.display='none'" style="background:none;border:none;color:#fff;font-size:18px;margin-left:10px;cursor:pointer;">×</button>
+            </div>
         </div>
-    </div>
-    
-    <!-- Main Content -->
-    <div id="main-content">
+        
         <header class="header">
             <div class="logo">🎰 SLOTS BR</div>
             <div style="display:flex;gap:10px;">
@@ -362,27 +127,52 @@
                 <p>100% até R$ 500 + 100 Giros</p>
             </div>
             
-            <!-- Marketing Banners -->
-            <div class="marketing-banner" onclick="showPromoDetail()">
-                <span class="badge">NOVO</span>
-                <h3>🎁 Bônus de Boas-Vindas</h3>
-                <p>100% até R$ 500 no primeiro depósito</p>
+            <div class="marquee">
+                <span class="marquee-text" id="marquee-content"></span>
             </div>
             
-            <div class="marketing-banner" onclick="showPromoDetail()">
-                <span class="badge">HOT</span>
-                <h3>🔥 Recarga Diária</h3>
-                <p>Ganhe 20% extra todo dia</p>
-            </div>
-            
-            <!-- Games -->
-            <div style="font-size:16px;font-weight:700;color:var(--accent);margin-bottom:12px;">🔥 Jogos Populares</div>
-            <div class="games-grid" id="games-grid"></div>
+            <div id="game-providers"></div>
         </main>
     </div>
     
-    <!-- Profile Page -->
-    <div id="profile-page" style="display:none;padding-bottom:80px;">
+    <!-- PROMO PAGE -->
+    <div class="promo-page" id="promo-page">
+        <div class="promo-header">🎁 Promoções</div>
+        
+        <div class="marketing-banner" onclick="showPromoDetail('welcome')">
+            <span class="badge">NOVO</span>
+            <h3>🎁 Bônus de Boas-Vindas</h3>
+            <p>100% até R$ 500 no primeiro depósito</p>
+        </div>
+        
+        <div class="marketing-banner" onclick="showPromoDetail('daily')">
+            <span class="badge">HOT</span>
+            <h3>🔥 Recarga Diária</h3>
+            <p>Ganhe 20% extra todo dia</p>
+        </div>
+        
+        <div class="marketing-banner" onclick="showPromoDetail('cashback')">
+            <span class="badge">VIP</span>
+            <h3>💰 Cashback Semanal</h3>
+            <p>Até 10% de volta toda segunda</p>
+        </div>
+        
+        <div class="marketing-banner" onclick="showPromoDetail('referral')">
+            <span class="badge">Novo</span>
+            <h3>👥 Indique e Ganhe</h3>
+            <p>Ganhe R$ 50 por amigo indicado</p>
+        </div>
+    </div>
+    
+    <!-- PROMO DETAIL -->
+    <div class="promo-detail-page" id="promo-detail-page">
+        <button class="back-btn" onclick="backToPromo()">← Voltar</button>
+        <div class="promo-detail-image" id="promo-detail-image">🎁</div>
+        <div class="promo-detail-content" id="promo-detail-content"></div>
+    </div>
+    
+    <!-- PROFILE PAGE -->
+    <div class="profile-page" id="profile-page">
         <div class="profile-header">
             <div class="profile-avatar">👤</div>
             <div style="font-size:20px;font-weight:bold;">Visitante</div>
@@ -396,7 +186,7 @@
                 <div style="flex:1;">Depositar</div>
                 <div style="color:var(--text-secondary);">›</div>
             </div>
-            <div class="profile-menu-item" onclick="tg.showAlert('Promoções')">
+            <div class="profile-menu-item" onclick="showPromoPage()">
                 <div class="icon">🎁</div>
                 <div style="flex:1;">Promoções</div>
                 <div style="color:var(--text-secondary);">›</div>
@@ -421,23 +211,23 @@
     
     <!-- Bottom Nav -->
     <nav class="bottom-nav">
-        <a href="#" class="nav-item active" onclick="showHome()">
+        <a class="nav-item active" onclick="showHome()">
             <span class="icon">🏠</span>
             <span>Início</span>
         </a>
-        <a href="#" class="nav-item" onclick="tg.showAlert('Promoções')">
+        <a class="nav-item" onclick="showPromoPage()">
             <span class="icon">🎁</span>
             <span>Promoções</span>
         </a>
-        <a href="#" class="nav-item" onclick="tg.showAlert('Eventos')">
+        <a class="nav-item" onclick="tg.showAlert('Eventos')">
             <span class="icon">🎯</span>
             <span>Eventos</span>
         </a>
-        <a href="#" class="nav-item" onclick="tg.showAlert('Depósito')">
+        <a class="nav-item" onclick="tg.showAlert('Depósito')">
             <span class="icon">💰</span>
             <span>Depósito</span>
         </a>
-        <a href="#" class="nav-item" onclick="showProfile()">
+        <a class="nav-item" onclick="showProfile()">
             <span class="icon">👤</span>
             <span>Perfil</span>
         </a>
@@ -447,8 +237,8 @@
     <div class="modal-overlay" id="login-modal">
         <div class="modal">
             <div class="modal-title">🔑 Entrar</div>
-            <input type="text" class="form-input" placeholder="Email ou telefone" style="margin-bottom:12px;">
-            <input type="password" class="form-input" placeholder="Senha" style="margin-bottom:16px;">
+            <input type="text" class="form-input" placeholder="Email ou telefone">
+            <input type="password" class="form-input" placeholder="Senha">
             <button class="btn-submit" onclick="closeModal('login-modal');tg.showAlert('Login realizado!')">ENTRAR</button>
         </div>
     </div>
@@ -457,21 +247,51 @@
     <div class="modal-overlay" id="register-modal">
         <div class="modal">
             <div class="modal-title">📝 Registrar</div>
-            <input type="text" class="form-input" placeholder="Nome" style="margin-bottom:12px;">
-            <input type="email" class="form-input" placeholder="Email" style="margin-bottom:12px;">
-            <input type="password" class="form-input" placeholder="Senha" style="margin-bottom:16px;">
-            <button class="btn-submit" onclick="closeModal('register-modal');tg.showAlert('Conta criada!')">CRIAR CONTA</button>
+            
+            <!-- Tab Buttons -->
+            <div style="display:flex;gap:10px;margin-bottom:16px;">
+                <button id="tab-sms" class="btn" style="flex:1;background:var(--accent);color:#fff;" onclick="switchRegTab('sms')">SMS</button>
+                <button id="tab-pwd" class="btn" style="flex:1;background:transparent;color:var(--accent);border:1px solid var(--accent);" onclick="switchRegTab('pwd')">Senha</button>
+            </div>
+            
+            <!-- SMS Registration -->
+            <div id="reg-sms">
+                <div style="display:flex;gap:8px;margin-bottom:12px;">
+                    <select class="form-input" style="width:80px;flex-shrink:0;">
+                        <option>+55</option>
+                    </select>
+                    <input type="tel" class="form-input" placeholder="Número de telefone" style="flex:1;">
+                </div>
+                <div style="display:flex;gap:8px;margin-bottom:12px;">
+                    <input type="text" class="form-input" placeholder="Código SMS" style="flex:1;">
+                    <button class="btn" style="background:var(--accent);color:#fff;padding:12px 16px;white-space:nowrap;" onclick="tg.showAlert('Código enviado!')">Enviar</button>
+                </div>
+            </div>
+            
+            <!-- Password Registration (Hidden by default) -->
+            <div id="reg-pwd" style="display:none;">
+                <div style="display:flex;gap:8px;margin-bottom:12px;">
+                    <select class="form-input" style="width:80px;flex-shrink:0;">
+                        <option>+55</option>
+                    </select>
+                    <input type="tel" class="form-input" placeholder="Número de telefone" style="flex:1;">
+                </div>
+                <input type="password" class="form-input" placeholder="Criar senha" style="margin-bottom:12px;">
+                <input type="password" class="form-input" placeholder="Confirmar senha">
+            </div>
+            
+            <button class="btn-submit" onclick="closeModal('register-modal');tg.showAlert('Conta criada!')" style="margin-top:16px;">CRIAR CONTA</button>
         </div>
     </div>
     
-    <!-- Promo Popup -->
-    <div class="popup-overlay" id="promo-popup">
+    <!-- Register Promo Popup -->
+    <div class="popup-overlay" id="register-popup">
         <div class="popup">
-            <button class="popup-close" onclick="closePopup('promo-popup')">×</button>
+            <button class="popup-close" onclick="closePopup('register-popup')">×</button>
             <div style="font-size:48px;margin-bottom:12px;">🎁</div>
             <h3 style="margin-bottom:8px;">Bônus de Boas-Vindas!</h3>
-            <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">Registre agora e ganhe 100% até R$ 500 + 100 giros grátis!</p>
-            <button class="btn-submit" onclick="closePopup('promo-popup');showModal('register-modal');">REGISTRAR</button>
+            <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">Registre agora e ganhe 100% até R$ 500 + 100 giros!</p>
+            <button class="btn-submit" onclick="closePopup('register-popup');showModal('register-modal');">REGISTRAR</button>
         </div>
     </div>
     
@@ -482,35 +302,203 @@
         tg.setHeaderColor('#0f0c0a');
         tg.setBackgroundColor('#0f0c0a');
         
-        // Games data
-        const games = [
-            { name: 'Sweet Bonanza', icon: '🍭' },
-            { name: 'Gates of Olympus', icon: '⚡' },
-            { name: 'Big Bass', icon: '🎣' },
-            { name: 'Sugar Rush', icon: '🍬' },
-            { name: 'Wolf Gold', icon: '🐺' },
-            { name: 'Starlight', icon: '💎' }
+        // Game data
+        const gamesData = {
+            'Pragmatic': [
+                { name: 'Sweet Bonanza', icon: '🍭' },
+                { name: 'Gates of Olympus', icon: '⚡' },
+                { name: 'Big Bass', icon: '🎣' },
+                { name: 'Sugar Rush', icon: '🍬' },
+                { name: 'Wolf Gold', icon: '🐺' },
+                { name: 'Starlight', icon: '💎' }
+            ],
+            'PG Soft': [
+                { name: 'Mahjong Ways', icon: '🀄' },
+                { name: 'Lucky Neko', icon: '🐱' },
+                { name: 'Treasures', icon: '🏛️' },
+                { name: 'Wild Bandito', icon: '🤠' },
+                { name: 'Dragon Hatch', icon: '🐉' },
+                { name: 'Candy Burst', icon: '🍭' }
+            ],
+            'JILI': [
+                { name: 'Super Ace', icon: '🃏' },
+                { name: 'Golden Empire', icon: '👑' },
+                { name: 'Fortune Gems', icon: '💎' },
+                { name: 'Money Coming', icon: '💰' },
+                { name: 'Boxing King', icon: '🥊' },
+                { name: 'Dragon Tiger', icon: '🐲' }
+            ]
+        };
+        
+        const providers = [
+            { id: 'Pragmatic', name: 'Pragmatic Play', logo: 'PP' },
+            { id: 'PG Soft', name: 'PG Soft', logo: 'PG' },
+            { id: 'JILI', name: 'JILI Games', logo: 'JL' }
         ];
         
-        // Render games
-        document.getElementById('games-grid').innerHTML = games.map(g => `
-            <div class="game-card" onclick="tg.showAlert('${g.name}')">
-                <div class="game-thumb">${g.icon}</div>
-                <div class="game-info">
-                    <div class="game-name">${g.name}</div>
-                </div>
-            </div>
-        `).join('');
+        // Marquee
+        const marqueeData = [
+            { player: 'J***o', amount: 'R$ 50.000', game: 'Sweet Bonanza', icon: '🎉' },
+            { player: 'M***a', amount: 'R$ 12.500', icon: '💰' },
+            { player: 'P***o', amount: 'R$ 120.000', game: 'Gates of Olympus', icon: '🔥' },
+            { player: 'A**a', amount: 'R$ 8.900', icon: '💸' },
+            { player: 'C*****s', amount: 'R$ 75.000', game: 'Big Bass', icon: '🏆' }
+        ];
         
-        // Hide loading after 2s
+        document.getElementById('marquee-content').textContent = marqueeData.map(item => 
+            item.game ? `${item.icon} ${item.player} ganhou ${item.amount} no ${item.game}` : `${item.icon} ${item.player} sacou ${item.amount}`
+        ).join(' • ');
+        
+        // Render game providers
+        function renderProviders() {
+            const html = providers.map(p => {
+                const games = gamesData[p.id] || [];
+                return `
+                    <div style="margin-bottom:20px;">
+                        <div style="font-size:16px;font-weight:700;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+                            <span style="background:linear-gradient(135deg,var(--accent),#d64a1a);color:#fff;padding:4px 10px;border-radius:6px;font-size:12px;">${p.logo}</span>
+                            <span>${p.name}</span>
+                        </div>
+                        <div class="games-grid">
+                            ${games.map(g => `
+                                <div class="game-card" onclick="tg.showAlert('${g.name}')">
+                                    <div class="game-thumb">${g.icon}</div>
+                                    <div class="game-info"><div class="game-name">${g.name}</div></div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById('game-providers').innerHTML = html;
+        }
+        
+        renderProviders();
+        
+        // Loading
         setTimeout(() => {
             document.getElementById('loading-screen').classList.add('hidden');
-            // Show promo popup
-            setTimeout(() => {
-                document.getElementById('promo-popup').classList.add('active');
-            }, 500);
+            setTimeout(() => document.getElementById('register-popup').classList.add('active'), 500);
         }, 2000);
         
+        // Navigation
+        function showHome() {
+            hideAllPages();
+            document.getElementById('home-page').style.display = 'block';
+            updateNav(0);
+        }
+        
+        function showPromoPage() {
+            hideAllPages();
+            document.getElementById('promo-page').classList.add('active');
+            updateNav(1);
+        }
+        
+        function showProfile() {
+            hideAllPages();
+            document.getElementById('profile-page').classList.add('active');
+            updateNav(4);
+        }
+        
+        function hideAllPages() {
+            document.getElementById('home-page').style.display = 'none';
+            document.getElementById('promo-page').classList.remove('active');
+            document.getElementById('promo-detail-page').classList.remove('active');
+            document.getElementById('profile-page').classList.remove('active');
+        }
+        
+        function updateNav(index) {
+            document.querySelectorAll('.nav-item').forEach((n, i) => n.classList.toggle('active', i === index));
+        }
+        
+        // Promo detail
+        const promoDetails = {
+            welcome: {
+                icon: '🎁',
+                title: 'Bônus de Boas-Vindas',
+                content: `
+                    <h3>🎁 Como funciona:</h3>
+                    <p>Faça seu primeiro depósito e ganhe 100% de bônus até R$ 500!</p>
+                    <h3>📋 Regras:</h3>
+                    <ul>
+                        <li>Mínimo de depósito: R$ 20</li>
+                        <li>Bônus máximo: R$ 500</li>
+                        <li>Rollover: 35x o valor do bônus</li>
+                        <li>Válido por 7 dias</li>
+                    </ul>
+                    <h3>🎰 +100 Giros Grátis</h3>
+                    <p>Receba também 100 giros grátis no slot Sweet Bonanza!</p>
+                `
+            },
+            daily: {
+                icon: '🔥',
+                title: 'Recarga Diária',
+                content: `
+                    <h3>🔥 Como funciona:</h3>
+                    <p>Todos os dias, ganhe 20% extra em qualquer depósito!</p>
+                    <h3>📋 Regras:</h3>
+                    <ul>
+                        <li>Válido uma vez por dia</li>
+                        <li>Mínimo: R$ 50</li>
+                        <li>Máximo bônus: R$ 200</li>
+                        <li>Rollover: 25x</li>
+                    </ul>
+                `
+            },
+            cashback: {
+                icon: '💰',
+                title: 'Cashback Semanal',
+                content: `
+                    <h3>💰 Como funciona:</h3>
+                    <p>Receba até 10% de volta nas suas perdas toda segunda-feira!</p>
+                    <h3>📋 Níveis:</h3>
+                    <ul>
+                        <li>VIP 1-3: 5% cashback</li>
+                        <li>VIP 4-6: 8% cashback</li>
+                        <li>VIP 7+: 10% cashback</li>
+                    </ul>
+                    <p>Sem rollover! Use como quiser!</p>
+                `
+            },
+            referral: {
+                icon: '👥',
+                title: 'Indique e Ganhe',
+                content: `
+                    <h3>👥 Como funciona:</h3>
+                    <p>Indique amigos e ganhe R$ 50 para cada um que se registrar e depositar!</p>
+                    <h3>📋 Passos:</h3>
+                    <ul>
+                        <li>Compartilhe seu código</li>
+                        <li>Amigo se registra</li>
+                        <li>Amigo deposita mínimo R$ 50</li>
+                        <li>Você recebe R$ 50!</li>
+                    </ul>
+                    <p>Sem limite de indicações!</p>
+                `
+            }
+        };
+        
+        function showPromoDetail(id) {
+            const promo = promoDetails[id];
+            if (!promo) return;
+            
+            document.getElementById('promo-detail-image').textContent = promo.icon;
+            document.getElementById('promo-detail-content').innerHTML = `
+                <h2 style="color:var(--accent);margin-bottom:16px;">${promo.title}</h2>
+                ${promo.content}
+                <button class="btn-submit" style="margin-top:20px;" onclick="tg.showAlert('Participando...')">PARTICIPAR AGORA</button>
+            `;
+            
+            document.getElementById('promo-page').classList.remove('active');
+            document.getElementById('promo-detail-page').classList.add('active');
+        }
+        
+        function backToPromo() {
+            document.getElementById('promo-detail-page').classList.remove('active');
+            document.getElementById('promo-page').classList.add('active');
+        }
+        
+        // Modal functions
         function showModal(id) {
             document.getElementById(id).classList.add('active');
         }
@@ -523,25 +511,31 @@
             document.getElementById(id).classList.remove('active');
         }
         
-        function showPromoDetail() {
-            tg.showAlert('Detalhes da promoção');
+        // Switch registration tab
+        function switchRegTab(tab) {
+            const smsBtn = document.getElementById('tab-sms');
+            const pwdBtn = document.getElementById('tab-pwd');
+            const smsForm = document.getElementById('reg-sms');
+            const pwdForm = document.getElementById('reg-pwd');
+            
+            if (tab === 'sms') {
+                smsBtn.style.background = 'var(--accent)';
+                smsBtn.style.color = '#fff';
+                pwdBtn.style.background = 'transparent';
+                pwdBtn.style.color = 'var(--accent)';
+                smsForm.style.display = 'block';
+                pwdForm.style.display = 'none';
+            } else {
+                pwdBtn.style.background = 'var(--accent)';
+                pwdBtn.style.color = '#fff';
+                smsBtn.style.background = 'transparent';
+                smsBtn.style.color = 'var(--accent)';
+                smsForm.style.display = 'none';
+                pwdForm.style.display = 'block';
+            }
         }
         
-        function showHome() {
-            document.getElementById('main-content').style.display = 'block';
-            document.getElementById('profile-page').style.display = 'none';
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.querySelectorAll('.nav-item')[0].classList.add('active');
-        }
-        
-        function showProfile() {
-            document.getElementById('main-content').style.display = 'none';
-            document.getElementById('profile-page').style.display = 'block';
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.querySelectorAll('.nav-item')[4].classList.add('active');
-        }
-        
-        // Close modal on overlay click
+        // Close on overlay click
         document.querySelectorAll('.modal-overlay').forEach(o => {
             o.addEventListener('click', function(e) {
                 if (e.target === this) this.classList.remove('active');
