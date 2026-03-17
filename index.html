@@ -553,107 +553,17 @@
         
         <!-- Main Toggle: Hot Games + Providers -->
         <div class="main-toggle">
-            <button class="toggle-btn active" onclick="switchView(this, 'hot')">
+            <button class="toggle-btn active" onclick="switchMainView(this, 'hot')">
                 <span>🔥</span> Populares
             </button>
-            <button class="toggle-btn" onclick="switchView(this, 'providers')">
+            <button class="toggle-btn" onclick="switchMainView(this, 'providers')">
                 <span>🏭</span> Provedores
             </button>
         </div>
         
-        <!-- Category Tabs (shown when in hot games) -->
-        <div id="category-tabs" class="cat-tabs">
-            <button class="cat-tab active" onclick="filterCategory(this, 'all')">Todos</button>
-            <button class="cat-tab" onclick="filterCategory(this, 'slots')">Slots</button>
-            <button class="cat-tab" onclick="filterCategory(this, 'live')">Ao Vivo</button>
-            <button class="cat-tab" onclick="filterCategory(this, 'table')">Mesa</button>
-        </div>
-        
-        <!-- Hot Games View -->
-        <div id="hot-view">
-            <div class="games-grid">
-                <div class="game-card" onclick="openGame('Sweet Bonanza')">
-                    <div class="game-thumb">🍭</div>
-                    <div class="game-info">
-                        <div class="game-name">Sweet Bonanza</div>
-                        <div class="game-provider">Pragmatic</div>
-                    </div>
-                </div>
-                <div class="game-card" onclick="openGame('Gates of Olympus')">
-                    <div class="game-thumb">⚡</div>
-                    <div class="game-info">
-                        <div class="game-name">Gates of Olympus</div>
-                        <div class="game-provider">Pragmatic</div>
-                    </div>
-                </div>
-                <div class="game-card" onclick="openGame('Big Bass')">
-                    <div class="game-thumb">🎣</div>
-                    <div class="game-info">
-                        <div class="game-name">Big Bass</div>
-                        <div class="game-provider">Pragmatic</div>
-                    </div>
-                </div>
-                <div class="game-card" onclick="openGame('Sugar Rush')">
-                    <div class="game-thumb">🍬</div>
-                    <div class="game-info">
-                        <div class="game-name">Sugar Rush</div>
-                        <div class="game-provider">Pragmatic</div>
-                    </div>
-                </div>
-                <div class="game-card" onclick="openGame('Wolf Gold')">
-                    <div class="game-thumb">🐺</div>
-                    <div class="game-info">
-                        <div class="game-name">Wolf Gold</div>
-                        <div class="game-provider">Pragmatic</div>
-                    </div>
-                </div>
-                <div class="game-card" onclick="openGame('Starlight')">
-                    <div class="game-thumb">💎</div>
-                    <div class="game-info">
-                        <div class="game-name">Starlight Princess</div>
-                        <div class="game-provider">Pragmatic</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Providers View -->
-        <div id="providers-view" style="display:none">
-            <div class="section-title">🏭 Selecione o Provedor</div>
-            <div class="providers-grid">
-                <div class="provider-card" onclick="selectProvider(this, 'Pragmatic')">
-                    <div class="provider-logo">PP</div>
-                    <div class="provider-name">Pragmatic</div>
-                </div>
-                <div class="provider-card" onclick="selectProvider(this, 'PG Soft')">
-                    <div class="provider-logo">PG</div>
-                    <div class="provider-name">PG Soft</div>
-                </div>
-                <div class="provider-card" onclick="selectProvider(this, 'JILI')">
-                    <div class="provider-logo">JL</div>
-                    <div class="provider-name">JILI</div>
-                </div>
-                <div class="provider-card" onclick="selectProvider(this, 'Fa Chai')">
-                    <div class="provider-logo">FC</div>
-                    <div class="provider-name">Fa Chai</div>
-                </div>
-                <div class="provider-card" onclick="selectProvider(this, 'Microgaming')">
-                    <div class="provider-logo">MG</div>
-                    <div class="provider-name">Microgaming</div>
-                </div>
-                <div class="provider-card" onclick="selectProvider(this, 'NetEnt')">
-                    <div class="provider-logo">NE</div>
-                    <div class="provider-name">NetEnt</div>
-                </div>
-                <div class="provider-card" onclick="selectProvider(this, 'Red Tiger')">
-                    <div class="provider-logo">RT</div>
-                    <div class="provider-name">Red Tiger</div>
-                </div>
-                <div class="provider-card" onclick="selectProvider(this, 'Playtech')">
-                    <div class="provider-logo">PT</div>
-                    <div class="provider-name">Playtech</div>
-                </div>
-            </div>
+        <!-- Dynamic Content Area -->
+        <div id="content-area">
+            <!-- Content will be loaded dynamically -->
         </div>
         
         <!-- Compliance -->
@@ -772,6 +682,93 @@
         tg.ready();
         tg.setHeaderColor('#0d0a08');
         tg.setBackgroundColor('#0d0a08');
+
+        // Game data by provider
+        const gamesData = {
+            'Pragmatic': [
+                { name: 'Sweet Bonanza', icon: '🍭', provider: 'Pragmatic' },
+                { name: 'Gates of Olympus', icon: '⚡', provider: 'Pragmatic' },
+                { name: 'Big Bass Bonanza', icon: '🎣', provider: 'Pragmatic' },
+                { name: 'Sugar Rush', icon: '🍬', provider: 'Pragmatic' },
+                { name: 'Wolf Gold', icon: '🐺', provider: 'Pragmatic' },
+                { name: 'Starlight Princess', icon: '💎', provider: 'Pragmatic' }
+            ],
+            'PG Soft': [
+                { name: 'Mahjong Ways', icon: '🀄', provider: 'PG Soft' },
+                { name: 'Lucky Neko', icon: '🐱', provider: 'PG Soft' },
+                { name: 'Treasures of Aztec', icon: '🏛️', provider: 'PG Soft' },
+                { name: 'Wild Bandito', icon: '🤠', provider: 'PG Soft' },
+                { name: 'Dragon Hatch', icon: '🐉', provider: 'PG Soft' },
+                { name: 'Candy Burst', icon: '🍭', provider: 'PG Soft' }
+            ],
+            'JILI': [
+                { name: 'Super Ace', icon: '🃏', provider: 'JILI' },
+                { name: 'Golden Empire', icon: '👑', provider: 'JILI' },
+                { name: 'Fortune Gems', icon: '💎', provider: 'JILI' },
+                { name: 'Money Coming', icon: '💰', provider: 'JILI' },
+                { name: 'Boxing King', icon: '🥊', provider: 'JILI' },
+                { name: 'Dragon & Tiger', icon: '🐲', provider: 'JILI' }
+            ],
+            'Fa Chai': [
+                { name: 'Chinese New Year', icon: '🧧', provider: 'Fa Chai' },
+                { name: 'Panda Panda', icon: '🐼', provider: 'Fa Chai' },
+                { name: 'Lucky Fortunes', icon: '🍀', provider: 'Fa Chai' },
+                { name: 'Golden Genie', icon: '🧞', provider: 'Fa Chai' },
+                { name: 'Dragon Koi', icon: '🐉', provider: 'Fa Chai' },
+                { name: 'Wealth God', icon: '💎', provider: 'Fa Chai' }
+            ],
+            'Microgaming': [
+                { name: 'Mega Moolah', icon: '🦁', provider: 'Microgaming' },
+                { name: 'Thunderstruck II', icon: '⚡', provider: 'Microgaming' },
+                { name: 'Immortal Romance', icon: '🧛', provider: 'Microgaming' },
+                { name: 'Game of Thrones', icon: '👑', provider: 'Microgaming' },
+                { name: 'Jurassic Park', icon: '🦕', provider: 'Microgaming' },
+                { name: 'Break da Bank', icon: '🏦', provider: 'Microgaming' }
+            ],
+            'NetEnt': [
+                { name: 'Starburst', icon: '⭐', provider: 'NetEnt' },
+                { name: 'Gonzo\'s Quest', icon: '🗿', provider: 'NetEnt' },
+                { name: 'Dead or Alive', icon: '🤠', provider: 'NetEnt' },
+                { name: 'Blood Suckers', icon: '🧛', provider: 'NetEnt' },
+                { name: 'Jack Hammer', icon: '🔨', provider: 'NetEnt' },
+                { name: 'Fruit Shop', icon: '🍎', provider: 'NetEnt' }
+            ],
+            'Red Tiger': [
+                { name: 'Dragon\'s Luck', icon: '🐉', provider: 'Red Tiger' },
+                { name: 'Piggy Riches', icon: '🐷', provider: 'Red Tiger' },
+                { name: 'Mystery Reels', icon: '❓', provider: 'Red Tiger' },
+                { name: 'Wild Spartans', icon: '⚔️', provider: 'Red Tiger' },
+                { name: 'Flaming Fox', icon: '🦊', provider: 'Red Tiger' },
+                { name: 'Treasure Mine', icon: '⛏️', provider: 'Red Tiger' }
+            ],
+            'Playtech': [
+                { name: 'Age of Gods', icon: '⚡', provider: 'Playtech' },
+                { name: 'Buffalo Blitz', icon: '🦬', provider: 'Playtech' },
+                { name: 'Great Blue', icon: '🐋', provider: 'Playtech' },
+                { name: 'Frankie Dettori', icon: '🏇', provider: 'Playtech' },
+                { name: 'Gladiator', icon: '🛡️', provider: 'Playtech' },
+                { name: 'Beach Life', icon: '🏖️', provider: 'Playtech' }
+            ]
+        };
+
+        // Hot games (mix of popular games from all providers)
+        const hotGames = [
+            ...gamesData['Pragmatic'].slice(0, 3),
+            ...gamesData['PG Soft'].slice(0, 2),
+            ...gamesData['JILI'].slice(0, 1)
+        ];
+
+        // Providers list
+        const providers = [
+            { id: 'Pragmatic', name: 'Pragmatic', logo: 'PP' },
+            { id: 'PG Soft', name: 'PG Soft', logo: 'PG' },
+            { id: 'JILI', name: 'JILI', logo: 'JL' },
+            { id: 'Fa Chai', name: 'Fa Chai', logo: 'FC' },
+            { id: 'Microgaming', name: 'Microgaming', logo: 'MG' },
+            { id: 'NetEnt', name: 'NetEnt', logo: 'NE' },
+            { id: 'Red Tiger', name: 'Red Tiger', logo: 'RT' },
+            { id: 'Playtech', name: 'Playtech', logo: 'PT' }
+        ];
         
         // Marquee data - player wins and withdrawals (with masking)
         const marqueeData = [
@@ -844,35 +841,80 @@
                 }
             });
         });
+
+        // Initialize - load hot games
+        renderHotGames();
         
-        // Switch between Hot Games and Providers
-        function switchView(btn, view) {
+        // Render hot games
+        function renderHotGames() {
+            const html = `
+                <div class="section-title">🔥 Jogos Populares</div>
+                <div class="games-grid">
+                    ${hotGames.map(game => `
+                        <div class="game-card" onclick="openGame('${game.name}')">
+                            <div class="game-thumb">${game.icon}</div>
+                            <div class="game-info">
+                                <div class="game-name">${game.name}</div>
+                                <div class="game-provider">${game.provider}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            document.getElementById('content-area').innerHTML = html;
+        }
+
+        // Render providers grid
+        function renderProviders() {
+            const html = `
+                <div class="section-title">🏭 Selecione o Provedor</div>
+                <div class="providers-grid">
+                    ${providers.map(p => `
+                        <div class="provider-card" onclick="showProviderGames('${p.id}')">
+                            <div class="provider-logo">${p.logo}</div>
+                            <div class="provider-name">${p.name}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            document.getElementById('content-area').innerHTML = html;
+        }
+
+        // Show games for selected provider
+        function showProviderGames(providerId) {
+            const games = gamesData[providerId] || [];
+            const provider = providers.find(p => p.id === providerId);
+            
+            const html = `
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:15px;">
+                    <button class="btn btn-login" onclick="renderProviders();switchMainView(document.querySelectorAll('.toggle-btn')[1], 'providers')" style="padding:6px 12px;font-size:12px;">← Voltar</button>
+                    <div class="section-title" style="margin:0;">${provider.logo} ${provider.name}</div>
+                </div>
+                <div class="games-grid">
+                    ${games.map(game => `
+                        <div class="game-card" onclick="openGame('${game.name}')">
+                            <div class="game-thumb">${game.icon}</div>
+                            <div class="game-info">
+                                <div class="game-name">${game.name}</div>
+                                <div class="game-provider">${game.provider}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            document.getElementById('content-area').innerHTML = html;
+        }
+
+        // Switch main view
+        function switchMainView(btn, view) {
             document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             
             if (view === 'hot') {
-                document.getElementById('hot-view').style.display = 'block';
-                document.getElementById('providers-view').style.display = 'none';
-                document.getElementById('category-tabs').style.display = 'flex';
+                renderHotGames();
             } else {
-                document.getElementById('hot-view').style.display = 'none';
-                document.getElementById('providers-view').style.display = 'block';
-                document.getElementById('category-tabs').style.display = 'none';
+                renderProviders();
             }
-        }
-        
-        // Filter by category
-        function filterCategory(btn, category) {
-            document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            tg.showAlert('Filtrando: ' + category);
-        }
-        
-        // Select provider
-        function selectProvider(card, provider) {
-            document.querySelectorAll('.provider-card').forEach(c => c.classList.remove('active'));
-            card.classList.add('active');
-            tg.showAlert('Provedor selecionado: ' + provider);
         }
         
         // Open game
