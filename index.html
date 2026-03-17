@@ -769,21 +769,21 @@
         tg.setHeaderColor('#0d0a08');
         tg.setBackgroundColor('#0d0a08');
         
-        // Marquee data - player wins and withdrawals
+        // Marquee data - player wins and withdrawals (with masking)
         const marqueeData = [
-            { type: 'win', player: 'João', game: 'Sweet Bonanza', amount: 'R$ 50.000', icon: '🎉' },
-            { type: 'withdraw', player: 'Maria', amount: 'R$ 12.500', icon: '💰' },
-            { type: 'win', player: 'Pedro', game: 'Gates of Olympus', amount: 'R$ 120.000', icon: '🔥' },
-            { type: 'withdraw', player: 'Ana', amount: 'R$ 8.900', icon: '💸' },
-            { type: 'win', player: 'Carlos', game: 'Big Bass', amount: 'R$ 75.000', icon: '🏆' },
-            { type: 'withdraw', player: 'Julia', amount: 'R$ 25.000', icon: '💵' },
-            { type: 'win', player: 'Lucas', game: 'Sugar Rush', amount: 'R$ 200.000', icon: '⭐' },
-            { type: 'withdraw', player: 'Fernanda', amount: 'R$ 15.600', icon: '💳' },
-            { type: 'win', player: 'Marcos', game: 'Wolf Gold', amount: 'R$ 45.000', icon: '🎯' },
-            { type: 'withdraw', player: 'Patricia', amount: 'R$ 32.000', icon: '🏧' }
+            { type: 'win', player: 'J***o', game: 'Sweet Bonanza', amount: 'R$ 50.000', icon: '🎉' },
+            { type: 'withdraw', player: 'M***a', amount: 'R$ 12.500', icon: '💰' },
+            { type: 'win', player: 'P***o', game: 'Gates of Olympus', amount: 'R$ 120.000', icon: '🔥' },
+            { type: 'withdraw', player: 'A**a', amount: 'R$ 8.900', icon: '💸' },
+            { type: 'win', player: 'C*****s', game: 'Big Bass', amount: 'R$ 75.000', icon: '🏆' },
+            { type: 'withdraw', player: 'J***a', amount: 'R$ 25.000', icon: '💵' },
+            { type: 'win', player: 'L***s', game: 'Sugar Rush', amount: 'R$ 200.000', icon: '⭐' },
+            { type: 'withdraw', player: 'F*******a', amount: 'R$ 15.600', icon: '💳' },
+            { type: 'win', player: 'M***s', game: 'Wolf Gold', amount: 'R$ 45.000', icon: '🎯' },
+            { type: 'withdraw', player: 'P*****a', amount: 'R$ 32.000', icon: '🏧' }
         ];
         
-        // Generate marquee text
+        // Generate marquee text with masked info
         function generateMarqueeText() {
             return marqueeData.map(item => {
                 if (item.type === 'win') {
