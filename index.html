@@ -15,6 +15,8 @@
         .loading-screen.hidden { opacity: 0; pointer-events: none; }
         .loading-logo { font-size: 80px; margin-bottom: 20px; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        @keyframes load { 0% { width: 0%; } 100% { width: 100%; } }
+        @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
         
         /* Download Banner */
         .download-banner { background: linear-gradient(90deg, var(--accent), #d64a1a); padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; }
@@ -107,8 +109,9 @@
     <div class="loading-screen" id="loading-screen">
         <div class="loading-logo">🎰</div>
         <div style="font-size:28px;font-weight:bold;color:var(--accent);margin-bottom:30px;">SLOTS BR</div>
-        <div style="width:200px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;">
-            <div style="height:100%;background:var(--accent);width:0%;animation:load 2s forwards;"></div>
+        <div style="width:200px;height:6px;background:var(--border);border-radius:3px;overflow:hidden;position:relative;">
+            <div style="height:100%;background:linear-gradient(90deg,var(--accent),#ff6b35,var(--accent));width:0%;animation:load 2s ease-out forwards;background-size:200% 100%;"></div>
+            <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);animation:shimmer 1s infinite;"></div>
         </div>
     </div>
     
@@ -137,6 +140,7 @@
             </div>
             
             <div class="marquee">
+                <span style="font-size:14px;margin-right:8px;flex-shrink:0;">📢</span>
                 <span class="marquee-text" id="marquee-content"></span>
             </div>
             
