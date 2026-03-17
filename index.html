@@ -9,13 +9,13 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
-            --bg: #0d0a08;
-            --card: #1a1410;
-            --border: #3d2820;
-            --accent: #cc3700;
-            --accent-light: #e64a19;
+            --bg: #0f0c0a;
+            --card: #1a1714;
+            --border: #3d3530;
+            --accent: #b83200;
+            --accent-light: #d64a1a;
             --text: #ffffff;
-            --text-secondary: #a08070;
+            --text-secondary: #9a9088;
         }
         
         body {
@@ -845,7 +845,7 @@
         // Initialize - load all provider sections on homepage
         renderAllProviderSections();
         
-        // Render all provider sections on homepage
+        // Render all provider sections on homepage (show all games)
         function renderAllProviderSections() {
             const html = providers.map(p => {
                 const games = gamesData[p.id] || [];
@@ -857,7 +857,7 @@
                             <span style="font-size:12px;color:var(--text-secondary);margin-left:auto;">${games.length} jogos</span>
                         </div>
                         <div class="games-grid">
-                            ${games.slice(0, 6).map(game => `
+                            ${games.map(game => `
                                 <div class="game-card" onclick="openGame('${game.name}')">
                                     <div class="game-thumb">${game.icon}</div>
                                     <div class="game-info">
