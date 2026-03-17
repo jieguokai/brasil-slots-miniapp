@@ -561,9 +561,9 @@
             </button>
         </div>
         
-        <!-- Dynamic Content Area -->
-        <div id="content-area">
-            <!-- Content will be loaded dynamically -->
+        <!-- All Providers Sections -->
+        <div id="providers-sections">
+            <!-- Provider sections will be rendered here -->
         </div>
         
         <!-- Compliance -->
@@ -842,67 +842,57 @@
             });
         });
 
-        // Initialize - load hot games
-        renderHotGames();
+        // Initialize - load all provider sections on homepage
+        renderAllProviderSections();
         
-        // Render hot games
+        // Render all provider sections on homepage
+        function renderAllProviderSections() {
+            const html = providers.map(p => {
+                const games = gamesData[p.id] || [];
+                return `
+                    <div class="provider-section" style="margin-bottom:24px;">
+                        <div class="section-title" style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                            <span style="background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;padding:6px 12px;border-radius:8px;font-size:14px;">${p.logo}</span>
+                            <span>${p.name}</span>
+                            <span style="font-size:12px;color:var(--text-secondary);margin-left:auto;">${games.length} jogos</span>
+                        </div>
+                        <div class="games-grid">
+                            ${games.slice(0, 6).map(game => `
+                                <div class="game-card" onclick="openGame('${game.name}')">
+                                    <div class="game-thumb">${game.icon}</div>
+                                    <div class="game-info">
+                                        <div class="game-name">${game.name}</div>
+                                        <div class="game-provider">${game.provider}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('providers-sections').innerHTML = html;
+        }
+
+        // Render hot games (for toggle button)
         function renderHotGames() {
             const html = `
-                <div class="section-title">🔥 Jogos Populares</div>
-                <div class="games-grid">
-                    ${hotGames.map(game => `
-                        <div class="game-card" onclick="openGame('${game.name}')">
-                            <div class="game-thumb">${game.icon}</div>
-                            <div class="game-info">
-                                <div class="game-name">${game.name}</div>
-                                <div class="game-provider">${game.provider}</div>
+                <div class="provider-section">
+                    <div class="section-title">🔥 Jogos Populares</div>
+                    <div class="games-grid">
+                        ${hotGames.map(game => `
+                            <div class="game-card" onclick="openGame('${game.name}')">
+                                <div class="game-thumb">${game.icon}</div>
+                                <div class="game-info">
+                                    <div class="game-name">${game.name}</div>
+                                    <div class="game-provider">${game.provider}</div>
+                                </div>
                             </div>
-                        </div>
-                    `).join('')}
+                        `).join('')}
+                    </div>
                 </div>
             `;
-            document.getElementById('content-area').innerHTML = html;
-        }
-
-        // Render providers grid
-        function renderProviders() {
-            const html = `
-                <div class="section-title">🏭 Selecione o Provedor</div>
-                <div class="providers-grid">
-                    ${providers.map(p => `
-                        <div class="provider-card" onclick="showProviderGames('${p.id}')">
-                            <div class="provider-logo">${p.logo}</div>
-                            <div class="provider-name">${p.name}</div>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-            document.getElementById('content-area').innerHTML = html;
-        }
-
-        // Show games for selected provider
-        function showProviderGames(providerId) {
-            const games = gamesData[providerId] || [];
-            const provider = providers.find(p => p.id === providerId);
-            
-            const html = `
-                <div style="display:flex;align-items:center;gap:10px;margin-bottom:15px;">
-                    <button class="btn btn-login" onclick="renderProviders();switchMainView(document.querySelectorAll('.toggle-btn')[1], 'providers')" style="padding:6px 12px;font-size:12px;">← Voltar</button>
-                    <div class="section-title" style="margin:0;">${provider.logo} ${provider.name}</div>
-                </div>
-                <div class="games-grid">
-                    ${games.map(game => `
-                        <div class="game-card" onclick="openGame('${game.name}')">
-                            <div class="game-thumb">${game.icon}</div>
-                            <div class="game-info">
-                                <div class="game-name">${game.name}</div>
-                                <div class="game-provider">${game.provider}</div>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-            document.getElementById('content-area').innerHTML = html;
+            document.getElementById('providers-sections').innerHTML = html;
         }
 
         // Switch main view
@@ -913,7 +903,7 @@
             if (view === 'hot') {
                 renderHotGames();
             } else {
-                renderProviders();
+                renderAllProviderSections();
             }
         }
         
