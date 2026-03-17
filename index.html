@@ -25,27 +25,66 @@
             padding-bottom: 70px;
         }
         
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
+        }
+        
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-logo {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Download Banner */
+        .download-banner {
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .download-btn {
+            background: #fff;
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+        }
+        
         /* Header */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 12px 16px;
-            background: linear-gradient(180deg, #1a1410 0%, #0d0a08 100%);
-            border-bottom: 2px solid var(--accent);
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
         }
         
-        .logo {
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--accent);
-            text-shadow: 0 0 10px rgba(204, 55, 0, 0.4);
-        }
-        
-        .header-buttons {
-            display: flex;
-            gap: 10px;
-        }
+        .logo { font-size: 20px; font-weight: bold; color: var(--accent); }
         
         .btn {
             padding: 8px 18px;
@@ -54,161 +93,44 @@
             font-size: 13px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s;
         }
         
-        .btn-login {
-            background: transparent;
-            color: var(--accent);
-            border: 2px solid var(--accent);
-        }
-        
-        .btn-login:hover {
-            background: var(--accent);
-            color: #fff;
-        }
-        
-        .btn-reg {
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            color: #fff;
-            box-shadow: 0 3px 10px rgba(204, 55, 0, 0.3);
-        }
+        .btn-login { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+        .btn-reg { background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: #fff; }
         
         .container { padding: 12px; }
         
         /* Banner */
         .banner {
-            background: linear-gradient(135deg, var(--accent), #d84315);
+            background: linear-gradient(135deg, var(--accent), #9a2a00);
             border-radius: 12px;
-            padding: 24px 20px;
+            padding: 24px;
             text-align: center;
             margin-bottom: 12px;
-            box-shadow: 0 4px 15px rgba(204, 55, 0, 0.25);
         }
         
-        .banner h1 { font-size: 24px; margin-bottom: 8px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-        .banner p { font-size: 14px; opacity: 0.95; }
+        .banner h1 { font-size: 22px; margin-bottom: 8px; }
         
-        /* Marquee */
-        .marquee {
-            background: rgba(204, 55, 0, 0.08);
-            border: 1px solid rgba(204, 55, 0, 0.2);
+        /* Marketing Banners */
+        .marketing-banner {
+            background: linear-gradient(135deg, var(--accent), #9a2a00);
             border-radius: 12px;
-            padding: 6px 12px;
-            margin-bottom: 12px;
-            overflow: hidden;
-            height: 28px;
-            display: flex;
-            align-items: center;
+            padding: 20px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            position: relative;
         }
         
-        .marquee-text {
-            display: inline-block;
-            animation: scroll 30s linear infinite;
+        .marketing-banner .badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #fff;
             color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 12px;
             font-size: 11px;
-            font-weight: 500;
-            white-space: nowrap;
-        }
-        
-        @keyframes scroll {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-        
-        /* Quick Links */
-        .quick-links {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-        
-        .quick-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 16px 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .quick-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-        
-        .quick-card .icon { font-size: 28px; margin-bottom: 6px; }
-        .quick-card .title { font-size: 12px; font-weight: 600; color: var(--text); }
-        
-        /* Category Tabs */
-        .cat-tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
-            overflow-x: auto;
-            padding-bottom: 4px;
-        }
-        
-        .cat-tab {
-            flex-shrink: 0;
-            background: var(--card);
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-        
-        .cat-tab.active {
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            border-color: var(--accent);
-            color: #fff;
-        }
-        
-        /* Main Toggle Buttons */
-        .main-toggle {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-        
-        .toggle-btn {
-            flex: 1;
-            background: var(--card);
-            border: 2px solid var(--border);
-            color: var(--text-secondary);
-            padding: 14px;
-            border-radius: 10px;
-            font-size: 14px;
             font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        
-        .toggle-btn.active {
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            border-color: var(--accent);
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
-        }
-        
-        /* Section Title */
-        .section-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--accent);
         }
         
         /* Games Grid */
@@ -225,17 +147,11 @@
             overflow: hidden;
             cursor: pointer;
             border: 1px solid var(--border);
-            transition: all 0.3s;
-        }
-        
-        .game-card:hover {
-            border-color: var(--accent);
-            transform: scale(1.02);
         }
         
         .game-thumb {
             aspect-ratio: 1;
-            background: linear-gradient(135deg, var(--accent), #ff6b35);
+            background: linear-gradient(135deg, var(--accent), #9a2a00);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -244,149 +160,70 @@
         
         .game-info { padding: 8px; }
         .game-name { font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .game-provider { font-size: 10px; color: var(--text-secondary); margin-top: 2px; }
         
-        /* Providers Grid */
-        .providers-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-        
-        .provider-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 14px 8px;
+        /* Profile */
+        .profile-header {
+            background: linear-gradient(135deg, var(--accent), #9a2a00);
+            padding: 30px 20px;
             text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
         }
         
-        .provider-card:hover {
-            border-color: var(--accent);
-            background: rgba(255, 69, 0, 0.1);
-        }
-        
-        .provider-card.active {
-            border-color: var(--accent);
-            background: rgba(255, 69, 0, 0.2);
-        }
-        
-        .provider-logo {
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            border-radius: 10px;
-            margin: 0 auto 8px;
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            margin: 0 auto 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
-            font-weight: bold;
-            color: #fff;
+            font-size: 40px;
         }
         
-        .provider-name { font-size: 11px; font-weight: 600; }
-        
-        /* Compliance */
-        .compliance {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 16px;
-            text-align: center;
-            margin-bottom: 12px;
-        }
-        
-        .compliance-title { font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; }
-        
-        .compliance-logos {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-        }
-        
-        .compliance-logo {
-            background: rgba(255, 69, 0, 0.2);
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            padding: 6px 14px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-        
-        /* Action Buttons */
-        .actions {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-        
-        .action-btn {
-            flex: 1;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            border: none;
-            color: #fff;
-            padding: 14px;
-            border-radius: 10px;
-            font-size: 14px;
+        .vip-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
             font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
+            margin-top: 10px;
         }
         
-        .action-btn.secondary {
+        .profile-menu {
             background: var(--card);
-            border: 2px solid var(--accent);
-            color: var(--accent);
-            box-shadow: none;
+            border-radius: 12px;
+            margin: 12px;
+            overflow: hidden;
         }
         
-        /* Social */
-        .social {
-            text-align: center;
-            margin-bottom: 12px;
-        }
-        
-        .social-title { font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; }
-        
-        .social-links {
+        .profile-menu-item {
             display: flex;
-            justify-content: center;
-            gap: 16px;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
         }
         
-        .social-link {
-            width: 44px;
-            height: 44px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 50%;
+        .profile-menu-item .icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(184, 50, 0, 0.15);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .social-link:hover {
-            border-color: var(--accent);
-            background: rgba(255, 69, 0, 0.1);
+            margin-right: 12px;
         }
         
         /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.8);
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -396,65 +233,30 @@
         .modal-overlay.active { display: flex; }
         
         .modal {
-            background: linear-gradient(180deg, #1a1410 0%, #0d0a08 100%);
-            border: 2px solid var(--accent);
+            background: var(--card);
+            border: 1px solid var(--border);
             border-radius: 16px;
             padding: 24px;
             width: 100%;
             max-width: 360px;
-            box-shadow: 0 0 30px rgba(255, 69, 0, 0.3);
         }
         
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+        .modal-title { font-size: 20px; font-weight: bold; color: var(--accent); margin-bottom: 20px; }
         
-        .modal-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--accent);
-        }
-        
-        .modal-close {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 24px;
-            cursor: pointer;
-        }
-        
-        .form-group {
-            margin-bottom: 16px;
-        }
-        
-        .form-label {
-            display: block;
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-bottom: 6px;
-        }
-        
+        .form-group { margin-bottom: 16px; }
         .form-input {
             width: 100%;
             background: rgba(255,255,255,0.05);
             border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 12px 16px;
+            padding: 12px;
             color: var(--text);
             font-size: 14px;
         }
         
-        .form-input:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-        
         .btn-submit {
             width: 100%;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            background: linear-gradient(135deg, var(--accent), #9a2a00);
             color: #fff;
             border: none;
             padding: 14px;
@@ -462,41 +264,53 @@
             font-size: 16px;
             font-weight: 700;
             cursor: pointer;
-            margin-top: 8px;
         }
         
-        .form-footer {
+        /* Popup */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .popup-overlay.active { display: flex; }
+        
+        .popup {
+            background: var(--card);
+            border: 1px solid var(--accent);
+            border-radius: 16px;
+            padding: 24px;
             text-align: center;
-            margin-top: 16px;
-            font-size: 12px;
-            color: var(--text-secondary);
+            max-width: 320px;
+            position: relative;
         }
         
-        .form-footer a {
-            color: var(--accent);
+        .popup-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 20px;
             cursor: pointer;
-        }
-        
-        /* Version */
-        .version {
-            text-align: center;
-            font-size: 11px;
-            color: var(--text-secondary);
-            padding: 16px;
         }
         
         /* Bottom Nav */
         .bottom-nav {
             position: fixed;
             bottom: 0;
-            left: 0;
-            right: 0;
+            left: 0; right: 0;
             background: var(--card);
-            border-top: 2px solid var(--accent);
+            border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-around;
             padding: 8px 0;
-            z-index: 100;
         }
         
         .nav-item {
@@ -507,7 +321,6 @@
             text-decoration: none;
             font-size: 11px;
             gap: 4px;
-            padding: 4px 12px;
         }
         
         .nav-item.active { color: var(--accent); }
@@ -515,413 +328,225 @@
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="logo">🎰 SLOTS BR</div>
-        <div class="header-buttons">
-            <button class="btn btn-login" onclick="showLoginModal()">Entrar</button>
-            <button class="btn btn-reg" onclick="showRegisterModal()">Registrar</button>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="loading-logo">🎰</div>
+        <div style="font-size:24px;font-weight:bold;color:var(--accent);margin-bottom:20px;">SLOTS BR</div>
+        <div style="width:200px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;">
+            <div style="height:100%;background:var(--accent);width:0%;animation:load 2s forwards;"></div>
         </div>
-    </header>
+    </div>
     
-    <main class="container">
-        <!-- Banner -->
-        <div class="banner">
-            <h1>🎉 BÔNUS DE BOAS-VINDAS</h1>
-            <p>100% até R$ 500 + 100 Giros Grátis</p>
+    <!-- Download Banner -->
+    <div class="download-banner" id="download-banner">
+        <span style="font-size:13px;font-weight:600;">📱 Baixe o APP e ganhe R$ 10!</span>
+        <div>
+            <button class="download-btn" onclick="tg.showAlert('Download iniciado!')">Baixar</button>
+            <button onclick="document.getElementById('download-banner').style.display='none'" style="background:none;border:none;color:#fff;font-size:18px;margin-left:10px;">×</button>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div id="main-content">
+        <header class="header">
+            <div class="logo">🎰 SLOTS BR</div>
+            <div style="display:flex;gap:10px;">
+                <button class="btn btn-login" onclick="showModal('login-modal')">Entrar</button>
+                <button class="btn btn-reg" onclick="showModal('register-modal')">Registrar</button>
+            </div>
+        </header>
+        
+        <main class="container">
+            <div class="banner">
+                <h1>🎉 BÔNUS DE BOAS-VINDAS</h1>
+                <p>100% até R$ 500 + 100 Giros</p>
+            </div>
+            
+            <!-- Marketing Banners -->
+            <div class="marketing-banner" onclick="showPromoDetail()">
+                <span class="badge">NOVO</span>
+                <h3>🎁 Bônus de Boas-Vindas</h3>
+                <p>100% até R$ 500 no primeiro depósito</p>
+            </div>
+            
+            <div class="marketing-banner" onclick="showPromoDetail()">
+                <span class="badge">HOT</span>
+                <h3>🔥 Recarga Diária</h3>
+                <p>Ganhe 20% extra todo dia</p>
+            </div>
+            
+            <!-- Games -->
+            <div style="font-size:16px;font-weight:700;color:var(--accent);margin-bottom:12px;">🔥 Jogos Populares</div>
+            <div class="games-grid" id="games-grid"></div>
+        </main>
+    </div>
+    
+    <!-- Profile Page -->
+    <div id="profile-page" style="display:none;padding-bottom:80px;">
+        <div class="profile-header">
+            <div class="profile-avatar">👤</div>
+            <div style="font-size:20px;font-weight:bold;">Visitante</div>
+            <div style="font-size:12px;opacity:0.8;">ID: 88888888</div>
+            <div class="vip-badge">⭐ VIP 1</div>
         </div>
         
-        <!-- Marquee -->
-        <div class="marquee" id="marquee">
-            <span class="marquee-text" id="marquee-content"></span>
-        </div>
-        
-        <!-- Quick Links -->
-        <div class="quick-links">
-            <div class="quick-card" onclick="tg.showAlert('Bônus Diário!')">
+        <div class="profile-menu">
+            <div class="profile-menu-item" onclick="tg.showAlert('Depósito')">
+                <div class="icon">💰</div>
+                <div style="flex:1;">Depositar</div>
+                <div style="color:var(--text-secondary);">›</div>
+            </div>
+            <div class="profile-menu-item" onclick="tg.showAlert('Promoções')">
                 <div class="icon">🎁</div>
-                <div class="title">Bônus</div>
+                <div style="flex:1;">Promoções</div>
+                <div style="color:var(--text-secondary);">›</div>
             </div>
-            <div class="quick-card" onclick="tg.showAlert('Torneio!')">
-                <div class="icon">🏆</div>
-                <div class="title">Torneio</div>
+            <div class="profile-menu-item" onclick="tg.showAlert('Vincular telefone')">
+                <div class="icon">📱</div>
+                <div style="flex:1;">Vincular Telefone</div>
+                <div style="color:var(--text-secondary);">›</div>
             </div>
-            <div class="quick-card" onclick="tg.showAlert('VIP!')">
-                <div class="icon">👑</div>
-                <div class="title">VIP</div>
+            <div class="profile-menu-item" onclick="tg.showAlert('Compartilhar')">
+                <div class="icon">🔗</div>
+                <div style="flex:1;">Compartilhar</div>
+                <div style="color:var(--text-secondary);">›</div>
             </div>
-        </div>
-        
-        <!-- Main Toggle: Hot Games + Providers -->
-        <div class="main-toggle">
-            <button class="toggle-btn active" onclick="switchMainView(this, 'hot')">
-                <span>🔥</span> Populares
-            </button>
-            <button class="toggle-btn" onclick="switchMainView(this, 'providers')">
-                <span>🏭</span> Provedores
-            </button>
-        </div>
-        
-        <!-- All Providers Sections -->
-        <div id="providers-sections">
-            <!-- Provider sections will be rendered here -->
-        </div>
-        
-        <!-- Compliance -->
-        <div class="compliance">
-            <div class="compliance-title">✅ SITE LICENCIADO E REGULAMENTADO</div>
-            <div class="compliance-logos">
-                <span class="compliance-logo">GLI</span>
-                <span class="compliance-logo">MGA</span>
-                <span class="compliance-logo">CURACAO</span>
+            <div class="profile-menu-item" onclick="tg.showAlert('Histórico')">
+                <div class="icon">🎮</div>
+                <div style="flex:1;">Histórico de Jogos</div>
+                <div style="color:var(--text-secondary);">›</div>
             </div>
         </div>
-        
-        <!-- Actions -->
-        <div class="actions">
-            <button class="action-btn" onclick="tg.showAlert('Depósito!')">💰 DEPOSITAR</button>
-            <button class="action-btn secondary" onclick="tg.showAlert('Suporte!')">💬 SUPORTE</button>
-        </div>
-        
-        <!-- Social -->
-        <div class="social">
-            <div class="social-title">SIGA-NOS</div>
-            <div class="social-links">
-                <div class="social-link" onclick="openSocial('telegram')">✈️</div>
-                <div class="social-link" onclick="openSocial('facebook')">📘</div>
-                <div class="social-link" onclick="openSocial('twitter')">🐦</div>
-                <div class="social-link" onclick="openSocial('instagram')">📸</div>
-            </div>
-        </div>
-        
-        <div class="version">v1.0.0 | © 2026 SLOTS BR</div>
-    </main>
+    </div>
+    
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active" onclick="showHome()">
+            <span class="icon">🏠</span>
+            <span>Início</span>
+        </a>
+        <a href="#" class="nav-item" onclick="tg.showAlert('Promoções')">
+            <span class="icon">🎁</span>
+            <span>Promoções</span>
+        </a>
+        <a href="#" class="nav-item" onclick="tg.showAlert('Eventos')">
+            <span class="icon">🎯</span>
+            <span>Eventos</span>
+        </a>
+        <a href="#" class="nav-item" onclick="tg.showAlert('Depósito')">
+            <span class="icon">💰</span>
+            <span>Depósito</span>
+        </a>
+        <a href="#" class="nav-item" onclick="showProfile()">
+            <span class="icon">👤</span>
+            <span>Perfil</span>
+        </a>
+    </nav>
     
     <!-- Login Modal -->
     <div class="modal-overlay" id="login-modal">
         <div class="modal">
-            <div class="modal-header">
-                <span class="modal-title">🔑 Entrar</span>
-                <button class="modal-close" onclick="closeModal('login-modal')">×</button>
-            </div>
-            <form onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label class="form-label">Email ou Telefone</label>
-                    <input type="text" class="form-input" placeholder="Digite seu email" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Senha</label>
-                    <input type="password" class="form-input" placeholder="Digite sua senha" required>
-                </div>
-                <button type="submit" class="btn-submit">ENTRAR</button>
-                <div class="form-footer">
-                    Não tem conta? <a onclick="switchToRegister()">Registre-se</a>
-                </div>
-            </form>
+            <div class="modal-title">🔑 Entrar</div>
+            <input type="text" class="form-input" placeholder="Email ou telefone" style="margin-bottom:12px;">
+            <input type="password" class="form-input" placeholder="Senha" style="margin-bottom:16px;">
+            <button class="btn-submit" onclick="closeModal('login-modal');tg.showAlert('Login realizado!')">ENTRAR</button>
         </div>
     </div>
     
     <!-- Register Modal -->
     <div class="modal-overlay" id="register-modal">
         <div class="modal">
-            <div class="modal-header">
-                <span class="modal-title">📝 Registrar</span>
-                <button class="modal-close" onclick="closeModal('register-modal')">×</button>
-            </div>
-            <form onsubmit="handleRegister(event)">
-                <div class="form-group">
-                    <label class="form-label">Nome Completo</label>
-                    <input type="text" class="form-input" placeholder="Seu nome" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-input" placeholder="seu@email.com" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Telefone</label>
-                    <input type="tel" class="form-input" placeholder="(11) 99999-9999" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Senha</label>
-                    <input type="password" class="form-input" placeholder="Crie uma senha" required>
-                </div>
-                <button type="submit" class="btn-submit">CRIAR CONTA</button>
-                <div class="form-footer">
-                    Já tem conta? <a onclick="switchToLogin()">Entre</a>
-                </div>
-            </form>
+            <div class="modal-title">📝 Registrar</div>
+            <input type="text" class="form-input" placeholder="Nome" style="margin-bottom:12px;">
+            <input type="email" class="form-input" placeholder="Email" style="margin-bottom:12px;">
+            <input type="password" class="form-input" placeholder="Senha" style="margin-bottom:16px;">
+            <button class="btn-submit" onclick="closeModal('register-modal');tg.showAlert('Conta criada!')">CRIAR CONTA</button>
         </div>
     </div>
     
-    <!-- Bottom Nav -->
-    <nav class="bottom-nav">
-        <a href="#" class="nav-item active" onclick="setNavActive(this)">
-            <span class="icon">🏠</span>
-            <span>Início</span>
-        </a>
-        <a href="#" class="nav-item" onclick="setNavActive(this)">
-            <span class="icon">🎁</span>
-            <span>Promoções</span>
-        </a>
-        <a href="#" class="nav-item" onclick="setNavActive(this)">
-            <span class="icon">🎯</span>
-            <span>Eventos</span>
-        </a>
-        <a href="#" class="nav-item" onclick="setNavActive(this)">
-            <span class="icon">💰</span>
-            <span>Depósito</span>
-        </a>
-        <a href="#" class="nav-item" onclick="setNavActive(this)">
-            <span class="icon">👤</span>
-            <span>Perfil</span>
-        </a>
-    </nav>
+    <!-- Promo Popup -->
+    <div class="popup-overlay" id="promo-popup">
+        <div class="popup">
+            <button class="popup-close" onclick="closePopup('promo-popup')">×</button>
+            <div style="font-size:48px;margin-bottom:12px;">🎁</div>
+            <h3 style="margin-bottom:8px;">Bônus de Boas-Vindas!</h3>
+            <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">Registre agora e ganhe 100% até R$ 500 + 100 giros grátis!</p>
+            <button class="btn-submit" onclick="closePopup('promo-popup');showModal('register-modal');">REGISTRAR</button>
+        </div>
+    </div>
     
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
         tg.ready();
-        tg.setHeaderColor('#0d0a08');
-        tg.setBackgroundColor('#0d0a08');
-
-        // Game data by provider
-        const gamesData = {
-            'Pragmatic': [
-                { name: 'Sweet Bonanza', icon: '🍭', provider: 'Pragmatic' },
-                { name: 'Gates of Olympus', icon: '⚡', provider: 'Pragmatic' },
-                { name: 'Big Bass Bonanza', icon: '🎣', provider: 'Pragmatic' },
-                { name: 'Sugar Rush', icon: '🍬', provider: 'Pragmatic' },
-                { name: 'Wolf Gold', icon: '🐺', provider: 'Pragmatic' },
-                { name: 'Starlight Princess', icon: '💎', provider: 'Pragmatic' }
-            ],
-            'PG Soft': [
-                { name: 'Mahjong Ways', icon: '🀄', provider: 'PG Soft' },
-                { name: 'Lucky Neko', icon: '🐱', provider: 'PG Soft' },
-                { name: 'Treasures of Aztec', icon: '🏛️', provider: 'PG Soft' },
-                { name: 'Wild Bandito', icon: '🤠', provider: 'PG Soft' },
-                { name: 'Dragon Hatch', icon: '🐉', provider: 'PG Soft' },
-                { name: 'Candy Burst', icon: '🍭', provider: 'PG Soft' }
-            ],
-            'JILI': [
-                { name: 'Super Ace', icon: '🃏', provider: 'JILI' },
-                { name: 'Golden Empire', icon: '👑', provider: 'JILI' },
-                { name: 'Fortune Gems', icon: '💎', provider: 'JILI' },
-                { name: 'Money Coming', icon: '💰', provider: 'JILI' },
-                { name: 'Boxing King', icon: '🥊', provider: 'JILI' },
-                { name: 'Dragon & Tiger', icon: '🐲', provider: 'JILI' }
-            ],
-            'Fa Chai': [
-                { name: 'Chinese New Year', icon: '🧧', provider: 'Fa Chai' },
-                { name: 'Panda Panda', icon: '🐼', provider: 'Fa Chai' },
-                { name: 'Lucky Fortunes', icon: '🍀', provider: 'Fa Chai' },
-                { name: 'Golden Genie', icon: '🧞', provider: 'Fa Chai' },
-                { name: 'Dragon Koi', icon: '🐉', provider: 'Fa Chai' },
-                { name: 'Wealth God', icon: '💎', provider: 'Fa Chai' }
-            ],
-            'Microgaming': [
-                { name: 'Mega Moolah', icon: '🦁', provider: 'Microgaming' },
-                { name: 'Thunderstruck II', icon: '⚡', provider: 'Microgaming' },
-                { name: 'Immortal Romance', icon: '🧛', provider: 'Microgaming' },
-                { name: 'Game of Thrones', icon: '👑', provider: 'Microgaming' },
-                { name: 'Jurassic Park', icon: '🦕', provider: 'Microgaming' },
-                { name: 'Break da Bank', icon: '🏦', provider: 'Microgaming' }
-            ],
-            'NetEnt': [
-                { name: 'Starburst', icon: '⭐', provider: 'NetEnt' },
-                { name: 'Gonzo\'s Quest', icon: '🗿', provider: 'NetEnt' },
-                { name: 'Dead or Alive', icon: '🤠', provider: 'NetEnt' },
-                { name: 'Blood Suckers', icon: '🧛', provider: 'NetEnt' },
-                { name: 'Jack Hammer', icon: '🔨', provider: 'NetEnt' },
-                { name: 'Fruit Shop', icon: '🍎', provider: 'NetEnt' }
-            ],
-            'Red Tiger': [
-                { name: 'Dragon\'s Luck', icon: '🐉', provider: 'Red Tiger' },
-                { name: 'Piggy Riches', icon: '🐷', provider: 'Red Tiger' },
-                { name: 'Mystery Reels', icon: '❓', provider: 'Red Tiger' },
-                { name: 'Wild Spartans', icon: '⚔️', provider: 'Red Tiger' },
-                { name: 'Flaming Fox', icon: '🦊', provider: 'Red Tiger' },
-                { name: 'Treasure Mine', icon: '⛏️', provider: 'Red Tiger' }
-            ],
-            'Playtech': [
-                { name: 'Age of Gods', icon: '⚡', provider: 'Playtech' },
-                { name: 'Buffalo Blitz', icon: '🦬', provider: 'Playtech' },
-                { name: 'Great Blue', icon: '🐋', provider: 'Playtech' },
-                { name: 'Frankie Dettori', icon: '🏇', provider: 'Playtech' },
-                { name: 'Gladiator', icon: '🛡️', provider: 'Playtech' },
-                { name: 'Beach Life', icon: '🏖️', provider: 'Playtech' }
-            ]
-        };
-
-        // Hot games (mix of popular games from all providers)
-        const hotGames = [
-            ...gamesData['Pragmatic'].slice(0, 3),
-            ...gamesData['PG Soft'].slice(0, 2),
-            ...gamesData['JILI'].slice(0, 1)
-        ];
-
-        // Providers list
-        const providers = [
-            { id: 'Pragmatic', name: 'Pragmatic', logo: 'PP' },
-            { id: 'PG Soft', name: 'PG Soft', logo: 'PG' },
-            { id: 'JILI', name: 'JILI', logo: 'JL' },
-            { id: 'Fa Chai', name: 'Fa Chai', logo: 'FC' },
-            { id: 'Microgaming', name: 'Microgaming', logo: 'MG' },
-            { id: 'NetEnt', name: 'NetEnt', logo: 'NE' },
-            { id: 'Red Tiger', name: 'Red Tiger', logo: 'RT' },
-            { id: 'Playtech', name: 'Playtech', logo: 'PT' }
+        tg.setHeaderColor('#0f0c0a');
+        tg.setBackgroundColor('#0f0c0a');
+        
+        // Games data
+        const games = [
+            { name: 'Sweet Bonanza', icon: '🍭' },
+            { name: 'Gates of Olympus', icon: '⚡' },
+            { name: 'Big Bass', icon: '🎣' },
+            { name: 'Sugar Rush', icon: '🍬' },
+            { name: 'Wolf Gold', icon: '🐺' },
+            { name: 'Starlight', icon: '💎' }
         ];
         
-        // Marquee data - player wins and withdrawals (with masking)
-        const marqueeData = [
-            { type: 'win', player: 'J***o', game: 'Sweet Bonanza', amount: 'R$ 50.000', icon: '🎉' },
-            { type: 'withdraw', player: 'M***a', amount: 'R$ 12.500', icon: '💰' },
-            { type: 'win', player: 'P***o', game: 'Gates of Olympus', amount: 'R$ 120.000', icon: '🔥' },
-            { type: 'withdraw', player: 'A**a', amount: 'R$ 8.900', icon: '💸' },
-            { type: 'win', player: 'C*****s', game: 'Big Bass', amount: 'R$ 75.000', icon: '🏆' },
-            { type: 'withdraw', player: 'J***a', amount: 'R$ 25.000', icon: '💵' },
-            { type: 'win', player: 'L***s', game: 'Sugar Rush', amount: 'R$ 200.000', icon: '⭐' },
-            { type: 'withdraw', player: 'F*******a', amount: 'R$ 15.600', icon: '💳' },
-            { type: 'win', player: 'M***s', game: 'Wolf Gold', amount: 'R$ 45.000', icon: '🎯' },
-            { type: 'withdraw', player: 'P*****a', amount: 'R$ 32.000', icon: '🏧' }
-        ];
+        // Render games
+        document.getElementById('games-grid').innerHTML = games.map(g => `
+            <div class="game-card" onclick="tg.showAlert('${g.name}')">
+                <div class="game-thumb">${g.icon}</div>
+                <div class="game-info">
+                    <div class="game-name">${g.name}</div>
+                </div>
+            </div>
+        `).join('');
         
-        // Generate marquee text with masked info
-        function generateMarqueeText() {
-            return marqueeData.map(item => {
-                if (item.type === 'win') {
-                    return `${item.icon} ${item.player} ganhou ${item.amount} no ${item.game}`;
-                } else {
-                    return `${item.icon} ${item.player} sacou ${item.amount}`;
-                }
-            }).join(' • ');
+        // Hide loading after 2s
+        setTimeout(() => {
+            document.getElementById('loading-screen').classList.add('hidden');
+            // Show promo popup
+            setTimeout(() => {
+                document.getElementById('promo-popup').classList.add('active');
+            }, 500);
+        }, 2000);
+        
+        function showModal(id) {
+            document.getElementById(id).classList.add('active');
         }
         
-        // Initialize marquee
-        document.getElementById('marquee-content').textContent = generateMarqueeText();
-        
-        // Modal functions
-        function showLoginModal() {
-            document.getElementById('login-modal').classList.add('active');
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
         }
         
-        function showRegisterModal() {
-            document.getElementById('register-modal').classList.add('active');
+        function closePopup(id) {
+            document.getElementById(id).classList.remove('active');
         }
         
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
+        function showPromoDetail() {
+            tg.showAlert('Detalhes da promoção');
         }
         
-        function switchToRegister() {
-            closeModal('login-modal');
-            setTimeout(() => showRegisterModal(), 200);
+        function showHome() {
+            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('profile-page').style.display = 'none';
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.querySelectorAll('.nav-item')[0].classList.add('active');
         }
         
-        function switchToLogin() {
-            closeModal('register-modal');
-            setTimeout(() => showLoginModal(), 200);
-        }
-        
-        function handleLogin(e) {
-            e.preventDefault();
-            tg.showAlert('Login realizado com sucesso!');
-            closeModal('login-modal');
-        }
-        
-        function handleRegister(e) {
-            e.preventDefault();
-            tg.showAlert('Conta criada com sucesso!');
-            closeModal('register-modal');
+        function showProfile() {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('profile-page').style.display = 'block';
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.querySelectorAll('.nav-item')[4].classList.add('active');
         }
         
         // Close modal on overlay click
-        document.querySelectorAll('.modal-overlay').forEach(overlay => {
-            overlay.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.classList.remove('active');
-                }
+        document.querySelectorAll('.modal-overlay').forEach(o => {
+            o.addEventListener('click', function(e) {
+                if (e.target === this) this.classList.remove('active');
             });
         });
-
-        // Initialize - load all provider sections on homepage
-        renderAllProviderSections();
-        
-        // Render all provider sections on homepage (show all games)
-        function renderAllProviderSections() {
-            const html = providers.map(p => {
-                const games = gamesData[p.id] || [];
-                return `
-                    <div class="provider-section" style="margin-bottom:24px;">
-                        <div class="section-title" style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-                            <span style="background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;padding:6px 12px;border-radius:8px;font-size:14px;">${p.logo}</span>
-                            <span>${p.name}</span>
-                            <span style="font-size:12px;color:var(--text-secondary);margin-left:auto;">${games.length} jogos</span>
-                        </div>
-                        <div class="games-grid">
-                            ${games.map(game => `
-                                <div class="game-card" onclick="openGame('${game.name}')">
-                                    <div class="game-thumb">${game.icon}</div>
-                                    <div class="game-info">
-                                        <div class="game-name">${game.name}</div>
-                                        <div class="game-provider">${game.provider}</div>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            
-            document.getElementById('providers-sections').innerHTML = html;
-        }
-
-        // Render hot games (for toggle button)
-        function renderHotGames() {
-            const html = `
-                <div class="provider-section">
-                    <div class="section-title">🔥 Jogos Populares</div>
-                    <div class="games-grid">
-                        ${hotGames.map(game => `
-                            <div class="game-card" onclick="openGame('${game.name}')">
-                                <div class="game-thumb">${game.icon}</div>
-                                <div class="game-info">
-                                    <div class="game-name">${game.name}</div>
-                                    <div class="game-provider">${game.provider}</div>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-            document.getElementById('providers-sections').innerHTML = html;
-        }
-
-        // Switch main view
-        function switchMainView(btn, view) {
-            document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            if (view === 'hot') {
-                renderHotGames();
-            } else {
-                renderAllProviderSections();
-            }
-        }
-        
-        // Open game
-        function openGame(name) {
-            tg.showAlert('Abrindo: ' + name);
-        }
-        
-        // Open social
-        function openSocial(platform) {
-            tg.showAlert('Abrindo: ' + platform);
-        }
-        
-        // Set nav active
-        function setNavActive(el) {
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            el.classList.add('active');
-        }
     </script>
 </body>
 </html>
