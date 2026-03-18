@@ -39,6 +39,37 @@
         .marquee-text { display: inline-block; animation: scroll 30s linear infinite; color: var(--accent); font-size: 11px; white-space: nowrap; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         
+        /* Tab Switcher */
+        .tab-switcher {
+            display: flex;
+            background: var(--card);
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border);
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+        }
+        .games-view {
+            display: none;
+        }
+        .games-view.active {
+            display: block;
+        }
+        
         /* Marketing Entry Row */
         .marketing-row {
             display: flex;
@@ -236,7 +267,21 @@
                 </div>
             </div>
             
-            <div id="game-providers"></div>
+            <!-- Tab Switcher -->
+            <div class="tab-switcher">
+                <div class="tab-btn active" onclick="switchTab('hot')" id="tab-hot">🔥 Hot Games</div>
+                <div class="tab-btn" onclick="switchTab('providers')" id="tab-providers">🏢 Providers</div>
+            </div>
+            
+            <!-- Hot Games View -->
+            <div id="hot-games-view" class="games-view active">
+                <div class="games-grid" id="hot-games-grid"></div>
+            </div>
+            
+            <!-- Providers View -->
+            <div id="providers-view" class="games-view">
+                <div id="game-providers"></div>
+            </div>
         </main>
     </div>
     
@@ -608,6 +653,33 @@
         }
         
         renderProviders();
+        renderHotGames();
+        
+        // Tab switcher
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.games-view').forEach(view => view.classList.remove('active'));
+            
+            if (tab === 'hot') {
+                document.getElementById('tab-hot').classList.add('active');
+                document.getElementById('hot-games-view').classList.add('active');
+            } else {
+                document.getElementById('tab-providers').classList.add('active');
+                document.getElementById('providers-view').classList.add('active');
+            }
+        }
+        
+        // Render hot games
+        function renderHotGames() {
+            const hotGames = allGames.slice(0, 9);
+            const html = hotGames.map(g => `
+                <div class="game-card" onclick="tg.showAlert('${g.name}')">
+                    <div class="game-thumb" style="background-image:url('${g.image}')"></div>
+                    <div class="game-info"><div class="game-name">${g.name}</div></div>
+                </div>
+            `).join('');
+            document.getElementById('hot-games-grid').innerHTML = html;
+        }
         
         // Loading
         setTimeout(() => {
