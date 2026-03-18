@@ -13,7 +13,8 @@
         /* Loading */
         .loading-screen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.5s; }
         .loading-screen.hidden { opacity: 0; pointer-events: none; }
-        .loading-logo { font-size: 80px; margin-bottom: 20px; animation: pulse 1.5s infinite; }
+        .loading-logo { font-size: 80px; margin-bottom: 20px; animation: pulse 1.5s infinite, bounce 2s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
         @keyframes load { 0% { width: 0%; } 100% { width: 100%; } }
         @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
@@ -88,6 +89,15 @@
             text-align: center;
             cursor: pointer;
             min-width: 80px;
+            transition: all 0.3s;
+        }
+        .marketing-item:hover {
+            border-color: var(--accent);
+            background: rgba(184, 50, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        .marketing-item:active {
+            transform: scale(0.95);
         }
         
         .marketing-item .icon { font-size: 24px; margin-bottom: 4px; }
@@ -95,8 +105,29 @@
         
         /* Games */
         .games-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
-        .game-card { background: var(--card); border-radius: 10px; overflow: hidden; cursor: pointer; border: 1px solid var(--border); }
-        .game-thumb { aspect-ratio: 1; background-size: cover; background-position: center; }
+        .game-card { background: var(--card); border-radius: 10px; overflow: hidden; cursor: pointer; border: 1px solid var(--border); transition: all 0.3s; position: relative; }
+        .game-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 8px 24px rgba(184, 50, 0, 0.3); }
+        .game-card:active { transform: scale(0.98); }
+        .game-thumb { aspect-ratio: 1; background-size: cover; background-position: center; position: relative; }
+        .game-card::after {
+            content: '▶';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 40px;
+            height: 40px;
+            background: rgba(184, 50, 0, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #fff;
+            transition: all 0.3s;
+            opacity: 0;
+        }
+        .game-card:hover::after { transform: translate(-50%, -50%) scale(1); opacity: 1; }
         .game-info { padding: 8px; }
         .game-name { font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
@@ -244,8 +275,18 @@
         
         /* Bottom Nav */
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 8px 0; z-index: 100; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-secondary); font-size: 11px; gap: 4px; padding: 4px 12px; cursor: pointer; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-secondary); font-size: 11px; gap: 4px; padding: 4px 12px; cursor: pointer; transition: all 0.3s; position: relative; }
         .nav-item.active { color: var(--accent); }
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+        .nav-item:active { transform: scale(0.9); }
         .nav-item .icon { font-size: 22px; }
     </style>
 </head>
@@ -602,6 +643,11 @@
         </div>
     </div>
     
+    <!-- Scroll to Top Button -->
+    <div id="scroll-top" onclick="scrollToTop()" style="display: none; position: fixed; bottom: 80px; right: 16px; width: 44px; height: 44px; background: var(--accent); border-radius: 50%; align-items: center; justify-content: center; cursor: pointer; z-index: 99; box-shadow: 0 4px 12px rgba(184, 50, 0, 0.4); transition: all 0.3s;">
+        ↑
+    </div>
+    
     <!-- Bottom Nav -->
     <nav class="bottom-nav">
         <a class="nav-item active" onclick="showHome()">
@@ -744,8 +790,8 @@
                         <span style="font-size:12px;color:var(--text-secondary);margin-left:auto;">${p.games.length} jogos</span>
                     </div>
                     <div class="games-grid">
-                        ${p.games.map(g => `
-                            <div class="game-card" onclick="tg.showAlert('${g.name}')">
+                        ${p.games.map((g, i) => `
+                            <div class="game-card" onclick="tg.showAlert('${g.name}')" style="animation: fadeInUp 0.5s ${i * 0.05}s both;">
                                 <div class="game-thumb" style="background-image:url('${g.image}')"></div>
                                 <div class="game-info"><div class="game-name">${g.name}</div></div>
                             </div>
@@ -754,6 +800,11 @@
                 </div>
             `).join('');
             document.getElementById('game-providers').innerHTML = html;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         renderProviders();
@@ -808,6 +859,21 @@
             `).join('');
             document.getElementById('hot-games-grid').innerHTML = html;
         }
+        
+        // Scroll to top button
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Show/hide scroll to top button
+        window.addEventListener('scroll', () => {
+            const scrollBtn = document.getElementById('scroll-top');
+            if (window.scrollY > 300) {
+                scrollBtn.style.display = 'flex';
+            } else {
+                scrollBtn.style.display = 'none';
+            }
+        });
         
         // Loading
         setTimeout(() => {
