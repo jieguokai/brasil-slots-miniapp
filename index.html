@@ -203,6 +203,54 @@
             color: #fff;
         }
         
+        /* Activity Card */
+        .activity-card {
+            transition: all 0.3s;
+        }
+        .activity-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+        .activity-card:active {
+            transform: scale(0.98);
+        }
+        
+        /* Quick Withdraw Buttons */
+        .quick-withdraw {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .quick-withdraw:hover {
+            border-color: var(--accent);
+            background: rgba(184, 50, 0, 0.1);
+        }
+        .quick-withdraw.active {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        
+        /* Search Results */
+        .search-result-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .search-result-item:hover {
+            background: rgba(184, 50, 0, 0.1);
+        }
+        
         /* Invite Page */
         .share-btn {
             width: 44px;
@@ -313,11 +361,25 @@
         
         <header class="header">
             <div class="logo">🎰 SLOTS BR</div>
-            <div style="display:flex;gap:10px;">
+            <div style="display:flex;gap:10px;align-items:center;">
+                <button style="background:none;border:none;color:var(--text);font-size:20px;cursor:pointer;position:relative;" onclick="showNotifications()">
+                    🔔
+                    <span style="position:absolute;top:-4px;right:-4px;width:8px;height:8px;background:#ff4444;border-radius:50%;"></span>
+                </button>
+                <button style="background:none;border:none;color:var(--text);font-size:20px;cursor:pointer;" onclick="toggleSearch()">🔍</button>
                 <button class="btn btn-login" onclick="showModal('login-modal')">Entrar</button>
                 <button class="btn btn-reg" onclick="showModal('register-modal')">Registrar</button>
             </div>
         </header>
+        
+        <!-- Search Bar -->
+        <div id="search-bar" style="display:none;background:var(--card);padding:12px;border-bottom:1px solid var(--border);">
+            <div style="display:flex;gap:8px;align-items:center;">
+                <input type="text" id="search-input" placeholder="Buscar jogos..." style="flex:1;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:14px;" oninput="searchGames(this.value)">
+                <button style="background:none;border:none;color:var(--text-secondary);font-size:18px;cursor:pointer;" onclick="toggleSearch()">✕</button>
+            </div>
+            <div id="search-results" style="margin-top:8px;max-height:200px;overflow-y:auto;"></div>
+        </div>
         
         <main class="container">
             <div class="banner">
@@ -370,6 +432,71 @@
                 <div id="game-providers"></div>
             </div>
         </main>
+    </div>
+    
+    <!-- ACTIVITIES PAGE -->
+    <div class="activities-page" id="activities-page" style="display: none; padding: 12px; padding-bottom: 80px;">
+        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+            <button onclick="showHome()" style="background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; margin-right: 12px;">←</button>
+            <div style="font-size: 18px; font-weight: bold; flex: 1; text-align: center;">Atividades</div>
+            <div style="width: 32px;"></div>
+        </div>
+        
+        <!-- Activity Cards -->
+        <div class="activity-card" style="background: linear-gradient(135deg, var(--accent), #ff6b35); border-radius: 16px; padding: 20px; margin-bottom: 16px; cursor: pointer;" onclick="tg.showAlert('Bônus de Boas-Vindas')">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="font-size: 20px; font-weight: bold; margin-bottom: 8px;">🎁 Bônus de Boas-Vindas</div>
+                    <div style="font-size: 13px; opacity: 0.9;">100% até R$ 500 + 100 Giros</div>
+                </div>
+                <div style="font-size: 32px;">🎰</div>
+            </div>
+            <div style="margin-top: 12px; font-size: 11px; opacity: 0.8;">Válido até 31/12/2026</div>
+        </div>
+        
+        <div class="activity-card" style="background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 16px; padding: 20px; margin-bottom: 16px; cursor: pointer;" onclick="tg.showAlert('Cashback Diário')">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="font-size: 20px; font-weight: bold; margin-bottom: 8px;">💰 Cashback Diário</div>
+                    <div style="font-size: 13px; opacity: 0.9;">Até 15% de cashback todos os dias</div>
+                </div>
+                <div style="font-size: 32px;">💸</div>
+            </div>
+            <div style="margin-top: 12px; font-size: 11px; opacity: 0.8;">Disponível todos os dias</div>
+        </div>
+        
+        <div class="activity-card" style="background: linear-gradient(135deg, #f093fb, #f5576c); border-radius: 16px; padding: 20px; margin-bottom: 16px; cursor: pointer;" onclick="tg.showAlert('Torneio Semanal')">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="font-size: 20px; font-weight: bold; margin-bottom: 8px;">🏆 Torneio Semanal</div>
+                    <div style="font-size: 13px; opacity: 0.9;">Premiação total de R$ 100.000</div>
+                </div>
+                <div style="font-size: 32px;">🎯</div>
+            </div>
+            <div style="margin-top: 12px; font-size: 11px; opacity: 0.8;">Toda segunda-feira</div>
+        </div>
+        
+        <div class="activity-card" style="background: linear-gradient(135deg, #4facfe, #00f2fe); border-radius: 16px; padding: 20px; margin-bottom: 16px; cursor: pointer;" onclick="tg.showAlert('VIP Club')">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="font-size: 20px; font-weight: bold; margin-bottom: 8px;">👑 VIP Club</div>
+                    <div style="font-size: 13px; opacity: 0.9;">Benefícios exclusivos para membros</div>
+                </div>
+                <div style="font-size: 32px;">💎</div>
+            </div>
+            <div style="margin-top: 12px; font-size: 11px; opacity: 0.8;">Acesso vitalício</div>
+        </div>
+        
+        <div class="activity-card" style="background: linear-gradient(135deg, #fa709a, #fee140); border-radius: 16px; padding: 20px; margin-bottom: 16px; cursor: pointer;" onclick="tg.showAlert('Indique e Ganhe')">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="font-size: 20px; font-weight: bold; margin-bottom: 8px;">👥 Indique e Ganhe</div>
+                    <div style="font-size: 13px; opacity: 0.9;">Ganhe R$ 60 por cada amigo</div>
+                </div>
+                <div style="font-size: 32px;">🎉</div>
+            </div>
+            <div style="margin-top: 12px; font-size: 11px; opacity: 0.8;">Sem limite de indicações</div>
+        </div>
     </div>
     
     <!-- INVITE PAGE -->
@@ -426,6 +553,79 @@
             <div style="display: flex; justify-content: space-between; padding: 12px 0;">
                 <span style="font-size: 12px;">Amount of bets accumulated by the subordinate</span>
                 <span style="color: var(--accent); font-weight: bold;">≥500</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- WITHDRAW PAGE -->
+    <div class="withdraw-page" id="withdraw-page" style="display: none; padding: 12px; padding-bottom: 80px;">
+        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+            <button onclick="showHome()" style="background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; margin-right: 12px;">←</button>
+            <div style="font-size: 18px; font-weight: bold; flex: 1; text-align: center;">Saque</div>
+            <button style="background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer;">📋</button>
+        </div>
+        
+        <!-- Balance Card -->
+        <div style="background: linear-gradient(135deg, var(--accent), #9a2a00); border-radius: 16px; padding: 24px; margin-bottom: 20px; text-align: center;">
+            <div style="font-size: 14px; opacity: 0.9; margin-bottom: 8px;">Saldo Disponível</div>
+            <div style="font-size: 36px; font-weight: bold;">R$ 0.00</div>
+            <div style="font-size: 12px; opacity: 0.8; margin-top: 8px;">Bônus: R$ 0.00</div>
+        </div>
+        
+        <!-- Withdraw Amount -->
+        <div style="background: var(--card); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+            <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">Valor do Saque</div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                <span style="font-size: 24px; font-weight: bold; color: var(--accent);">R$</span>
+                <input type="number" id="withdraw-amount" placeholder="0.00" style="flex: 1; background: none; border: none; color: var(--text); font-size: 28px; font-weight: bold; outline: none;">
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <button class="quick-withdraw" onclick="setWithdrawAmount(50)">50</button>
+                <button class="quick-withdraw" onclick="setWithdrawAmount(100)">100</button>
+                <button class="quick-withdraw" onclick="setWithdrawAmount(200)">200</button>
+                <button class="quick-withdraw" onclick="setWithdrawAmount(500)">500</button>
+                <button class="quick-withdraw" onclick="setWithdrawAmount(1000)">1000</button>
+            </div>
+        </div>
+        
+        <!-- Payment Method -->
+        <div style="font-size: 14px; font-weight: bold; margin-bottom: 12px;">Método de Saque</div>
+        <div style="background: var(--card); border-radius: 12px; padding: 16px; margin-bottom: 16px; border: 2px solid var(--accent);">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="width: 48px; height: 48px; background: rgba(184, 50, 0, 0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🏦</div>
+                <div style="flex: 1;">
+                    <div style="font-weight: bold;">PIX</div>
+                    <div style="font-size: 12px; color: var(--text-secondary);">Chave: 15990556652</div>
+                </div>
+                <div style="color: var(--accent);">✓</div>
+            </div>
+        </div>
+        
+        <!-- Withdraw Info -->
+        <div style="background: var(--card); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                <span style="color: var(--text-secondary);">Valor do Saque</span>
+                <span id="withdraw-display">R$ 0.00</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                <span style="color: var(--text-secondary);">Taxa</span>
+                <span style="color: #4ade80;">Grátis</span>
+            </div>
+            <div style="border-top: 1px solid var(--border); padding-top: 12px; display: flex; justify-content: space-between;">
+                <span style="font-weight: bold;">Total a Receber</span>
+                <span id="withdraw-total" style="font-weight: bold; color: var(--accent);">R$ 0.00</span>
+            </div>
+        </div>
+        
+        <!-- Withdraw Button -->
+        <button style="width: 100%; background: linear-gradient(135deg, var(--accent), #9a2a00); color: #fff; border: none; padding: 16px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer;" onclick="submitWithdraw()">Sacar Agora</button>
+        
+        <!-- Withdraw History -->
+        <div style="margin-top: 24px;">
+            <div style="font-size: 14px; font-weight: bold; margin-bottom: 12px;">Histórico de Saques</div>
+            <div style="background: var(--card); border-radius: 12px; padding: 20px; text-align: center; color: var(--text-secondary);">
+                <div style="font-size: 32px; margin-bottom: 8px;">📋</div>
+                <div>Nenhum saque realizado</div>
             </div>
         </div>
     </div>
@@ -543,7 +743,7 @@
             <!-- Deposit/Withdraw Buttons -->
             <div style="display: flex; gap: 10px;">
                 <button style="flex: 1; background: var(--accent); color: #fff; border: none; padding: 12px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer;" onclick="showDepositPage()">💰 Deposit</button>
-                <button style="flex: 1; background: var(--card); color: var(--text); border: 1px solid var(--border); padding: 12px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer;" onclick="tg.showAlert('Saque')">💳 Withdraw</button>
+                <button style="flex: 1; background: var(--card); color: var(--text); border: 1px solid var(--border); padding: 12px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer;" onclick="showWithdrawPage()">💳 Withdraw</button>
             </div>
         </div>
         
@@ -643,6 +843,33 @@
         </div>
     </div>
     
+    <!-- Notification Modal -->
+    <div class="modal-overlay" id="notification-modal">
+        <div class="modal" style="max-width: 400px; max-height: 80vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div class="modal-title">🔔 Notificações</div>
+                <button onclick="closeModal('notification-modal')" style="background: none; border: none; color: var(--text-secondary); font-size: 20px; cursor: pointer;">✕</button>
+            </div>
+            <div id="notification-list">
+                <div style="background: var(--card); border-radius: 10px; padding: 16px; margin-bottom: 12px; border-left: 3px solid var(--accent);">
+                    <div style="font-weight: bold; margin-bottom: 4px;">🎁 Bônus de Boas-Vindas</div>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">Registre-se agora e ganhe 100% até R$ 500!</div>
+                    <div style="font-size: 11px; color: var(--text-secondary);">Há 2 horas</div>
+                </div>
+                <div style="background: var(--card); border-radius: 10px; padding: 16px; margin-bottom: 12px; border-left: 3px solid #4ade80;">
+                    <div style="font-weight: bold; margin-bottom: 4px;">💰 Cashback Disponível</div>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">Você tem R$ 25.00 de cashback para resgatar!</div>
+                    <div style="font-size: 11px; color: var(--text-secondary);">Há 5 horas</div>
+                </div>
+                <div style="background: var(--card); border-radius: 10px; padding: 16px; margin-bottom: 12px; border-left: 3px solid #ffd700;">
+                    <div style="font-weight: bold; margin-bottom: 4px;">🏆 Torneio Semanal</div>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">O torneio começou! Premiação de R$ 100.000</div>
+                    <div style="font-size: 11px; color: var(--text-secondary);">Ontem</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Scroll to Top Button -->
     <div id="scroll-top" onclick="scrollToTop()" style="display: none; position: fixed; bottom: 80px; right: 16px; width: 44px; height: 44px; background: var(--accent); border-radius: 50%; align-items: center; justify-content: center; cursor: pointer; z-index: 99; box-shadow: 0 4px 12px rgba(184, 50, 0, 0.4); transition: all 0.3s;">
         ↑
@@ -658,7 +885,7 @@
             <span class="icon">🎁</span>
             <span>Promoções</span>
         </a>
-        <a class="nav-item" onclick="tg.showAlert('Eventos')">
+        <a class="nav-item" onclick="showActivitiesPage()">
             <span class="icon">🎯</span>
             <span>Eventos</span>
         </a>
@@ -902,14 +1129,90 @@
         
         function hideAllPages() {
             document.getElementById('home-page').style.display = 'none';
+            document.getElementById('activities-page').style.display = 'none';
             document.getElementById('deposit-page').style.display = 'none';
+            document.getElementById('withdraw-page').style.display = 'none';
             document.getElementById('invite-page').style.display = 'none';
             document.getElementById('profile-page').classList.remove('active');
+        }
+
+        function showActivitiesPage() {
+            hideAllPages();
+            document.getElementById('activities-page').style.display = 'block';
+            updateNav(2);
+        }
+
+        function showWithdrawPage() {
+            hideAllPages();
+            document.getElementById('withdraw-page').style.display = 'block';
         }
 
         function showInvitePage() {
             hideAllPages();
             document.getElementById('invite-page').style.display = 'block';
+        }
+
+        // Search functions
+        function toggleSearch() {
+            const searchBar = document.getElementById('search-bar');
+            searchBar.style.display = searchBar.style.display === 'none' ? 'block' : 'none';
+            if (searchBar.style.display === 'block') {
+                document.getElementById('search-input').focus();
+            }
+        }
+
+        function searchGames(query) {
+            const resultsDiv = document.getElementById('search-results');
+            if (!query.trim()) {
+                resultsDiv.innerHTML = '';
+                return;
+            }
+
+            const filtered = allGames.filter(g => g.name.toLowerCase().includes(query.toLowerCase()));
+            if (filtered.length === 0) {
+                resultsDiv.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-secondary);">Nenhum jogo encontrado</div>';
+                return;
+            }
+
+            resultsDiv.innerHTML = filtered.map(g => `
+                <div class="search-result-item" onclick="tg.showAlert('${g.name}')">
+                    <div style="width: 40px; height: 40px; background: var(--border); border-radius: 8px; background-image: url('${g.image}'); background-size: cover;"></div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600;">${g.name}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Notification
+        function showNotifications() {
+            showModal('notification-modal');
+        }
+
+        // Withdraw functions
+        function setWithdrawAmount(amount) {
+            document.querySelectorAll('.quick-withdraw').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('withdraw-amount').value = amount;
+            updateWithdrawDisplay(amount);
+        }
+
+        function updateWithdrawDisplay(amount) {
+            document.getElementById('withdraw-display').textContent = 'R$ ' + parseFloat(amount).toFixed(2);
+            document.getElementById('withdraw-total').textContent = 'R$ ' + parseFloat(amount).toFixed(2);
+        }
+
+        document.getElementById('withdraw-amount')?.addEventListener('input', function() {
+            updateWithdrawDisplay(this.value || 0);
+        });
+
+        function submitWithdraw() {
+            const amount = document.getElementById('withdraw-amount').value;
+            if (!amount || amount < 10) {
+                tg.showAlert('Valor mínimo de saque: R$ 10.00');
+                return;
+            }
+            tg.showAlert(`Saque de R$ ${amount} solicitado via PIX!`);
         }
         
         // Deposit page state
