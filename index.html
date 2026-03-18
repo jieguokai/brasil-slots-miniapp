@@ -73,6 +73,74 @@
         .provider-section { margin-bottom: 20px; }
         .section-title { font-size: 16px; font-weight: 700; color: var(--accent); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
         
+        /* Payment Buttons */
+        .payment-btn {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .payment-btn.active {
+            background: linear-gradient(135deg, var(--accent), #ff6b35);
+            border-color: var(--accent);
+            color: #fff;
+        }
+        
+        /* Promo Options */
+        .promo-option {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .promo-option.active {
+            background: rgba(184, 50, 0, 0.2);
+            border-color: var(--accent);
+        }
+        .promo-option .check {
+            color: var(--text-secondary);
+            margin-right: 8px;
+        }
+        .promo-option.active .check {
+            color: var(--accent);
+        }
+        .promo-option.bonus {
+            background: linear-gradient(135deg, var(--accent), #ff6b35);
+            border-color: var(--accent);
+        }
+        
+        /* Amount Buttons */
+        .amount-btn {
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .amount-btn:hover {
+            border-color: var(--accent);
+        }
+        .amount-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+        
         /* Profile */
         .profile-page { display: none; padding-bottom: 80px; }
         .profile-page.active { display: block; }
@@ -183,25 +251,25 @@
         
         <!-- Deposit Channels -->
         <div style="font-size: 16px; font-weight: bold; margin-bottom: 12px;">Deposit Channels</div>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
-            <div style="background: linear-gradient(135deg, #ff6b35, #f7931e); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; font-weight: bold;">Pix</div>
-            <div style="background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; color: var(--text-secondary);">ALIPAY</div>
-            <div style="background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; color: #00d4aa; font-weight: bold;">maya</div>
-            <div style="background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer;">QRPh</div>
-            <div style="background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer;">AllBank</div>
-            <div style="background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; font-size: 11px;">FortunePay</div>
-            <div style="background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; font-size: 10px;">PISOPAY</div>
-            <div style="background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; color: #00b14f;">GrabPay</div>
-            <div style="background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; color: #005ce6; font-weight: bold;">GCash</div>
+        <div id="payment-methods" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
+            <div class="payment-btn active" data-method="pix" onclick="selectPayment(this)">Pix</div>
+            <div class="payment-btn" data-method="alipay" onclick="selectPayment(this)">ALIPAY</div>
+            <div class="payment-btn" data-method="maya" onclick="selectPayment(this)" style="color: #00d4aa;">maya</div>
+            <div class="payment-btn" data-method="qrph" onclick="selectPayment(this)">QRPh</div>
+            <div class="payment-btn" data-method="allbank" onclick="selectPayment(this)">AllBank</div>
+            <div class="payment-btn" data-method="fortune" onclick="selectPayment(this)" style="font-size: 11px;">FortunePay</div>
+            <div class="payment-btn" data-method="piso" onclick="selectPayment(this)" style="font-size: 10px;">PISOPAY</div>
+            <div class="payment-btn" data-method="grab" onclick="selectPayment(this)" style="color: #00b14f;">GrabPay</div>
+            <div class="payment-btn" data-method="gcash" onclick="selectPayment(this)" style="color: #005ce6;">GCash</div>
         </div>
         
         <!-- Promotion Selection -->
-        <div style="background: rgba(184, 50, 0, 0.2); border: 1px solid var(--accent); border-radius: 10px; padding: 12px; margin-bottom: 12px; display: flex; align-items: center; cursor: pointer;">
-            <span style="color: var(--accent); margin-right: 8px;">✓</span>
+        <div id="promo-no" class="promo-option active" onclick="selectPromo('no')">
+            <span class="check">✓</span>
             <span>Deposit Without Promotion</span>
         </div>
         
-        <div style="background: linear-gradient(135deg, var(--accent), #ff6b35); border-radius: 10px; padding: 16px; margin-bottom: 20px; cursor: pointer;">
+        <div id="promo-bonus" class="promo-option bonus" onclick="selectPromo('bonus')">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
                     <div style="font-size: 24px; font-weight: bold;">R$ 100</div>
@@ -225,8 +293,8 @@
         <!-- Amount Input -->
         <div style="background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 8px;">
             <div style="display: flex; align-items: center; gap: 8px;">
-                <span style="color: #4ade80; font-weight: bold;">R$</span>
-                <input type="number" placeholder="Range: 1 ~ 9,999,999" style="background: none; border: none; color: var(--text); font-size: 14px; flex: 1; outline: none;">
+                <span style="color: var(--accent); font-weight: bold;">R$</span>
+                <input type="number" id="deposit-amount" placeholder="Range: 1 ~ 9,999,999" style="background: none; border: none; color: var(--text); font-size: 14px; flex: 1; outline: none;">
             </div>
         </div>
         
@@ -235,16 +303,16 @@
         </div>
         
         <!-- Quick Amount Buttons -->
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
-            <button style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; cursor: pointer;" onclick="setAmount(10)">R$ 10</button>
-            <button style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; cursor: pointer;" onclick="setAmount(20)">R$ 20</button>
-            <button style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; cursor: pointer;" onclick="setAmount(50)">R$ 50</button>
-            <button style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; cursor: pointer;" onclick="setAmount(100)">R$ 100</button>
-            <button style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; cursor: pointer;" onclick="setAmount(200)">R$ 200</button>
-            <button style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; cursor: pointer;" onclick="setAmount(500)">R$ 500</button>
-            <button style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; cursor: pointer;" onclick="setAmount(1000)">R$ 1,000</button>
-            <button style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; cursor: pointer;" onclick="setAmount(5000)">R$ 5,000</button>
-            <button style="background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 12px; border-radius: 8px; cursor: pointer;" onclick="setAmount(10000)">R$ 10,000</button>
+        <div id="quick-amounts" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
+            <button class="amount-btn" onclick="selectAmount(10)">R$ 10</button>
+            <button class="amount-btn" onclick="selectAmount(20)">R$ 20</button>
+            <button class="amount-btn" onclick="selectAmount(50)">R$ 50</button>
+            <button class="amount-btn" onclick="selectAmount(100)">R$ 100</button>
+            <button class="amount-btn" onclick="selectAmount(200)">R$ 200</button>
+            <button class="amount-btn" onclick="selectAmount(500)">R$ 500</button>
+            <button class="amount-btn" onclick="selectAmount(1000)">R$ 1,000</button>
+            <button class="amount-btn" onclick="selectAmount(5000)">R$ 5,000</button>
+            <button class="amount-btn" onclick="selectAmount(10000)">R$ 10,000</button>
         </div>
         
         <!-- Support -->
@@ -253,7 +321,7 @@
         </div>
         
         <!-- Deposit Button -->
-        <button style="width: 100%; background: linear-gradient(135deg, var(--accent), #9a2a00); color: #fff; border: none; padding: 16px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer;" onclick="tg.showAlert('Processando depósito...')">Deposit Now</button>
+        <button id="deposit-btn" style="width: 100%; background: linear-gradient(135deg, var(--accent), #9a2a00); color: #fff; border: none; padding: 16px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer;" onclick="submitDeposit()">Deposit Now</button>
     </div>
     
     <!-- PROFILE PAGE -->
@@ -572,8 +640,50 @@
             document.getElementById('profile-page').classList.remove('active');
         }
         
-        function setAmount(amount) {
-            tg.showAlert('Valor selecionado: R$ ' + amount);
+        // Deposit page state
+        let selectedPayment = 'pix';
+        let selectedPromo = 'no';
+        let selectedAmount = 0;
+
+        // Select payment method
+        function selectPayment(element) {
+            document.querySelectorAll('.payment-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+            selectedPayment = element.dataset.method;
+        }
+
+        // Select promo
+        function selectPromo(type) {
+            const noPromo = document.getElementById('promo-no');
+            const bonusPromo = document.getElementById('promo-bonus');
+
+            if (type === 'no') {
+                noPromo.classList.add('active');
+                bonusPromo.classList.remove('active');
+                selectedPromo = 'no';
+            } else {
+                bonusPromo.classList.add('active');
+                noPromo.classList.remove('active');
+                selectedPromo = 'bonus';
+            }
+        }
+
+        // Select amount
+        function selectAmount(amount) {
+            document.querySelectorAll('.amount-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            selectedAmount = amount;
+            document.getElementById('deposit-amount').value = amount;
+        }
+
+        // Submit deposit
+        function submitDeposit() {
+            const amount = document.getElementById('deposit-amount').value || selectedAmount;
+            if (!amount || amount < 1) {
+                tg.showAlert('Por favor, insira um valor válido');
+                return;
+            }
+            tg.showAlert(`Depósito de R$ ${amount} via ${selectedPayment.toUpperCase()} ${selectedPromo === 'bonus' ? 'com bônus' : ''}`);
         }
         
         function updateNav(index) {
