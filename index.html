@@ -435,6 +435,64 @@
     </div>
     
     <!-- ACTIVITIES PAGE -->
+    <!-- GAME DETAIL PAGE -->
+    <div class="game-detail-page" id="game-detail-page" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 1000; overflow-y: auto;">
+        <div style="position: relative; height: 300px; background: linear-gradient(135deg, var(--accent), #9a2a00);">
+            <button onclick="closeGameDetail()" style="position: absolute; top: 16px; left: 16px; background: rgba(0,0,0,0.3); border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer; z-index: 10;">←</button>
+            <button style="position: absolute; top: 16px; right: 16px; background: rgba(0,0,0,0.3); border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer; z-index: 10;">♡</button>
+            <div id="game-detail-image" style="width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0.6;"></div>
+            <div style="position: absolute; bottom: 20px; left: 20px; right: 20px;">
+                <div id="game-detail-name" style="font-size: 28px; font-weight: bold; margin-bottom: 8px;"></div>
+                <div style="display: flex; gap: 8px;">
+                    <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 12px; font-size: 12px;">🎰 Slots</span>
+                    <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 12px; font-size: 12px;">🔥 Hot</span>
+                </div>
+            </div>
+        </div>
+        
+        <div style="padding: 20px;">
+            <div style="display: flex; justify-content: space-around; background: var(--card); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+                <div style="text-align: center;">
+                    <div style="font-size: 20px; font-weight: bold; color: var(--accent);">96.5%</div>
+                    <div style="font-size: 11px; color: var(--text-secondary);">RTP</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 20px; font-weight: bold; color: var(--accent);">High</div>
+                    <div style="font-size: 11px; color: var(--text-secondary);">Volatility</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 20px; font-weight: bold; color: var(--accent);">x5000</div>
+                    <div style="font-size: 11px; color: var(--text-secondary);">Max Win</div>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <div style="font-size: 16px; font-weight: bold; margin-bottom: 12px;">Sobre o Jogo</div>
+                <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
+                    Experimente a emoção deste incrível jogo de slots com gráficos deslumbrantes e recursos bônus incríveis. 
+                    Gire para ganhar prêmios épicos e ative rodadas grátis para multiplicar seus ganhos!
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <div style="font-size: 16px; font-weight: bold; margin-bottom: 12px;">Recursos</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    <span style="background: rgba(184, 50, 0, 0.2); color: var(--accent); padding: 6px 12px; border-radius: 16px; font-size: 12px;">🎁 Rodadas Grátis</span>
+                    <span style="background: rgba(184, 50, 0, 0.2); color: var(--accent); padding: 6px 12px; border-radius: 16px; font-size: 12px;">💎 Multiplicadores</span>
+                    <span style="background: rgba(184, 50, 0, 0.2); color: var(--accent); padding: 6px 12px; border-radius: 16px; font-size: 12px;">🎯 Bônus Game</span>
+                    <span style="background: rgba(184, 50, 0, 0.2); color: var(--accent); padding: 6px 12px; border-radius: 16px; font-size: 12px;">⚡ Jackpot</span>
+                </div>
+            </div>
+            
+            <button style="width: 100%; background: linear-gradient(135deg, var(--accent), #ff6b35); color: #fff; border: none; padding: 18px; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; margin-bottom: 12px;" onclick="tg.showAlert('Iniciando jogo...')">
+                ▶ JOGAR AGORA
+            </button>
+            <button style="width: 100%; background: var(--card); color: var(--text); border: 1px solid var(--border); padding: 14px; border-radius: 12px; font-size: 14px; cursor: pointer;" onclick="tg.showAlert('Modo Demo')">
+                🎮 Jogar Demo
+            </button>
+        </div>
+    </div>
+    
     <div class="activities-page" id="activities-page" style="display: none; padding: 12px; padding-bottom: 80px;">
         <div style="display: flex; align-items: center; margin-bottom: 20px;">
             <button onclick="showHome()" style="background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; margin-right: 12px;">←</button>
@@ -1079,7 +1137,7 @@
         function renderHotGames() {
             const hotGames = allGames.slice(0, 9);
             const html = hotGames.map(g => `
-                <div class="game-card" onclick="tg.showAlert('${g.name}')">
+                <div class="game-card" onclick="openGameDetail('${g.name}', '${g.image}')">
                     <div class="game-thumb" style="background-image:url('${g.image}')"></div>
                     <div class="game-info"><div class="game-name">${g.name}</div></div>
                 </div>
@@ -1150,6 +1208,19 @@
         function showInvitePage() {
             hideAllPages();
             document.getElementById('invite-page').style.display = 'block';
+        }
+
+        // Game Detail functions
+        function openGameDetail(gameName, gameImage) {
+            document.getElementById('game-detail-name').textContent = gameName;
+            document.getElementById('game-detail-image').style.backgroundImage = `url('${gameImage}')`;
+            document.getElementById('game-detail-page').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeGameDetail() {
+            document.getElementById('game-detail-page').style.display = 'none';
+            document.body.style.overflow = '';
         }
 
         // Search functions
